@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dokuku
+namespace dokuku.Dto
 {
-    public class Periode
+    public class CashFlowDto
     {
-        
     }
 }
