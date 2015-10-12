@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Alltest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CashFlowTest.cs" />
+    <Compile Include="PeriodeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CashFlow\CashFlow.csproj">

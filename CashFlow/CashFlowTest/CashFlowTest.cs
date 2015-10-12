@@ -7,8 +7,9 @@ namespace CashFlowTest
     public class CashFlowTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMembukaCashflow()
         {
+            
         }
     }
 }
