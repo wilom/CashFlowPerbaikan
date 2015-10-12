@@ -19,7 +19,23 @@ namespace CashFlow
             this._cabang = cabang;
             this._statusPeriode = statusPeriode;
         }
+        public void InId(string id) 
+        {
+            this._id = id;
+        }
+        public string GetId() 
+        {
+            return this._id;
+        }
 
+        public void InCabang(string cabang)
+        {
+            this._cabang = cabang;
+        }
+        public string GetCabang()
+        {
+            return this._cabang;
+        }
         public Dto.PeriodeDto SnapShot()
         {
             return new Dto.PeriodeDto()
