@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow", "CashFlow\CashFlow.csproj", "{D0A6E397-DD09-44B6-89F6-485AF7BB9C8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dokuku.CashFlow", "CashFlow\dokuku.CashFlow.csproj", "{D0A6E397-DD09-44B6-89F6-485AF7BB9C8B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlowTest", "CashFlowTest\CashFlowTest.csproj", "{554C9975-3E6D-4D44-A995-5E0A7CC474F1}"
 EndProject

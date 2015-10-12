@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dokuku.ex
+namespace CashFlow
 {
-    public enum StatusPeriode
+    public class CashFlow
     {
-        Open,
-        Close
     }
 }

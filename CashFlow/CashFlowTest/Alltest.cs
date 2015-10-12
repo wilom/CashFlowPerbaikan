@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CashFlow.ex;
-using CashFlow.Dto;
-using CashFlow;
+using dokuku.ex;
+using dokuku.Dto;
+using dokuku;
 
 namespace CashFlowTest
 {

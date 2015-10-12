@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CashFlow;
-using CashFlow.ex;
+using dokuku;
+using dokuku.ex;
 
 namespace CashFlowTest
 {

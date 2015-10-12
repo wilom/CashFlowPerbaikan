@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CashFlow.Dto
+namespace dokuku.Dto
 {
     public class SalesDto
     {

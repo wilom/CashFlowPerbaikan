@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CashFlow.cs" />
     <Compile Include="CashFlowEntry.cs" />
     <Compile Include="Dto\CashFlowEntryDto.cs" />
     <Compile Include="Dto\ItemNotaDto.cs" />
