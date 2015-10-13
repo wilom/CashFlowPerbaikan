@@ -10,21 +10,21 @@ namespace dokuku.CashFlow
     public class CashFlow
     {
         private string _tenanId;
-        //private Periode _periodId;
+        private PeriodeId _periodId;
         private double _saldoAwal;
         private double _saldoAkhir;
         private double _totalPenjualan;
         private double _totalPenjualanLain;
         private double _totalPengeluaran;
-        private string _idPer;
+        //private string _idPer;
         
        
-        public CashFlow(string tenanId, string idPer, double saldoAwal, 
+        public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal, 
             double saldoAkhir, double totalPenjualan, double totalPenjualanLain, double totalPengeluaran)
         {
             // TODO: Complete member initialization
             this._tenanId = tenanId;
-            this._idPer = idPer;
+            this._periodId = periodId;
             this._saldoAwal = saldoAwal;
             this._saldoAkhir = saldoAkhir;
             this._totalPenjualan = totalPenjualan;
@@ -38,7 +38,7 @@ namespace dokuku.CashFlow
             return new Dto.CashFlowDto()
             {
                 TenantId = this._tenanId,
-                PeriodId = this._idPer,
+                PeriodId = this._periodId.ToString(),
                 SaldoAwal = this._saldoAwal,
                 SaldoAkhir = this._saldoAkhir,
                 TotalPenjualan = this._totalPenjualan,

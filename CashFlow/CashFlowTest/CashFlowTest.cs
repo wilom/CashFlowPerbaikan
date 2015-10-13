@@ -13,12 +13,10 @@ namespace UnitTest
         CashFlow _cashFlow=null;
         [TestInitialize]
         public void init() 
-        { 
-            Periode  period =new Periode();
-            string idPer = period.ToString;
-            idPer = "20151001";
+        {
+            PeriodeId period = new PeriodeId("20151001");
             
-            _cashFlow = new CashFlow("ABC", idPer, 500000.0, 500000.0, 0.0, 0.0, 0.0);
+            _cashFlow = new CashFlow("ABC", period, 500000.0, 500000.0, 0.0, 0.0, 0.0);
 
         }
         [TestMethod]

@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using dokuku;
 using dokuku.ex;
 
-namespace CashFlowTest
+namespace UnitTest
 {
     [TestClass]
     public class PeriodeTest
