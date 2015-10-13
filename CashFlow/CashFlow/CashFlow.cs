@@ -9,20 +9,42 @@ namespace dokuku.CashFlow
 {
     public class CashFlow
     {
-        private string p1;
-        private Periode periode;
-        private double p2;
-
-        public CashFlow(string p1, Periode periode, double p2)
+        private string _tenanId;
+        //private Periode _periodId;
+        private double _saldoAwal;
+        private double _saldoAkhir;
+        private double _totalPenjualan;
+        private double _totalPenjualanLain;
+        private double _totalPengeluaran;
+        private string _idPer;
+        
+       
+        public CashFlow(string tenanId, string idPer, double saldoAwal, 
+            double saldoAkhir, double totalPenjualan, double totalPenjualanLain, double totalPengeluaran)
         {
             // TODO: Complete member initialization
-            this.p1 = p1;
-            this.periode = periode;
-            this.p2 = p2;
+            this._tenanId = tenanId;
+            this._idPer = idPer;
+            this._saldoAwal = saldoAwal;
+            this._saldoAkhir = saldoAkhir;
+            this._totalPenjualan = totalPenjualan;
+            this._totalPenjualanLain = totalPenjualanLain;
+            this._totalPengeluaran = totalPengeluaran;
         }
-        public CashFlowDto Snap()
+
+       
+        public Dto.CashFlowDto Snap()
         {
-            return new CashFlowDto(); 
+            return new Dto.CashFlowDto()
+            {
+                TenantId = this._tenanId,
+                PeriodId = this._idPer,
+                SaldoAwal = this._saldoAwal,
+                SaldoAkhir = this._saldoAkhir,
+                TotalPenjualan = this._totalPenjualan,
+                TotalPenjualanLain = this._totalPenjualanLain,
+                TotalPengeluaran = this._totalPengeluaran
+            };
         }
     }
 }

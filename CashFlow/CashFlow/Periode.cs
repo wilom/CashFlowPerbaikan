@@ -9,5 +9,11 @@ namespace dokuku
     public class Periode
     {
         
+        public Periode()
+        {
+            // TODO: Complete member initialization
+        }
+
+        public string ToString { get; set; }
     }
 }
