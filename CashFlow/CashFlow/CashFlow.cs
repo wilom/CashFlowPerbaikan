@@ -17,21 +17,22 @@ namespace dokuku.CashFlow
         private double _totalPenjualanLain;
         private double _totalPengeluaran;
         //private string _idPer;
-        
-       
-        public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal, 
-            double saldoAkhir, double totalPenjualan, double totalPenjualanLain, double totalPengeluaran)
+
+        public void Calculate() 
         {
-            // TODO: Complete member initialization
+            this._saldoAkhir = this._saldoAwal+this._totalPenjualan;
+            //this._totalPenjualan = this._totalPenjualanLain;
+            //this._totalPengeluaran = 0;
+        }
+        
+        public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal) 
+        {
             this._tenanId = tenanId;
             this._periodId = periodId;
             this._saldoAwal = saldoAwal;
-            this._saldoAkhir = saldoAkhir;
-            this._totalPenjualan = totalPenjualan;
-            this._totalPenjualanLain = totalPenjualanLain;
-            this._totalPengeluaran = totalPengeluaran;
+            Calculate();
+            
         }
-
        
         public Dto.CashFlowDto Snap()
         {

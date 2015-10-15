@@ -8,7 +8,6 @@ namespace dokuku.ex
 {
     public enum StatusPeriode
     {
-        Open,
-        Close
+        Bebas, Mingguan, Bulanan
     }
 }
