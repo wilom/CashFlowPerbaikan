@@ -9,6 +9,7 @@ namespace dokuku.CashFlow
 {
     public class CashFlow
     {
+        
         private string _tenanId;
         private PeriodeId _periodId;
         private double _saldoAwal;
@@ -16,14 +17,8 @@ namespace dokuku.CashFlow
         private double _totalPenjualan;
         private double _totalPenjualanLain;
         private double _totalPengeluaran;
-        //private string _idPer;
-
-        public void Calculate() 
-        {
-            this._saldoAkhir = this._saldoAwal+this._totalPenjualan;
-            //this._totalPenjualan = this._totalPenjualanLain;
-            //this._totalPengeluaran = 0;
-        }
+        private DateTime _tgl;
+        IList<Sales> _items = new List<Sales>();
         
         public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal) 
         {
@@ -47,5 +42,48 @@ namespace dokuku.CashFlow
                 TotalPengeluaran = this._totalPengeluaran
             };
         }
+
+        private class Sales
+        {
+            private DateTime _dateTime;
+            private double _nominal;
+            public Sales(DateTime date, double nominal)
+            {
+                this._dateTime = date;
+                this._nominal = nominal;
+            }
+
+            public double GetNominal
+            {
+                get
+                {
+                    return this._nominal;
+                }
+            }
+
+        }
+
+        public void AddSales(DateTime tgl, double nominal)
+        {
+            var newSales = new Sales(tgl, nominal);
+            this._items.Add(newSales);
+            Calculate();
+        }
+
+        private void Calculate()
+        {
+            var totalSales = CalculateSales();
+            this._totalPenjualan = totalSales;
+
+            this._saldoAkhir = this._saldoAwal + this._totalPenjualan;
+
+        }
+        private double CalculateSales()
+        {
+            return this._items.Sum(x => x.GetNominal);
+        }
+
     }
+
+    
 }
