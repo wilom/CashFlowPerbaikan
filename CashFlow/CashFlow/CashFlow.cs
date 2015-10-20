@@ -1,11 +1,12 @@
 ﻿using dokuku.Dto;
+using dokuku.exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dokuku.CashFlow
+namespace dokuku.CashFlowHead
 {
     public class CashFlow
     {
@@ -17,7 +18,6 @@ namespace dokuku.CashFlow
         private double _totalPenjualan;
         private double _totalPenjualanLain;
         private double _totalPengeluaran;
-        private DateTime _tgl;
         IList<Sales> _items = new List<Sales>();
         
         public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal) 
@@ -53,7 +53,7 @@ namespace dokuku.CashFlow
                 this._nominal = nominal;
             }
 
-            public double GetNominal
+            public double Nominal
             {
                 get
                 {
@@ -65,6 +65,8 @@ namespace dokuku.CashFlow
 
         public void AddSales(DateTime tgl, double nominal)
         {
+            throw new DateAlreadyExistException();
+
             var newSales = new Sales(tgl, nominal);
             this._items.Add(newSales);
             Calculate();
@@ -80,7 +82,7 @@ namespace dokuku.CashFlow
         }
         private double CalculateSales()
         {
-            return this._items.Sum(x => x.GetNominal);
+            return this._items.Sum(x => x.Nominal);
         }
 
     }

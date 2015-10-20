@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using dokuku.CashFlow;
+using dokuku.CashFlowHead;
 using dokuku;
 using dokuku.ex;
 using dokuku.Dto;
+using dokuku.exceptions;
 
 namespace UnitTest
 {
@@ -69,7 +70,6 @@ namespace UnitTest
         }
 
         [TestMethod]
-
         public void TestTambahPenjualan()
         {
             
@@ -106,6 +106,14 @@ namespace UnitTest
                 TotalPengeluaran = 0.0
             };
             Assert.AreEqual(expected, cashFlowSnapshot);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DateAlreadyExistException),"Tanggal sudah pernah diinput")]
+        public void testHanyaBolehSatuSalesDalamSatuHari() 
+        {
+            
+            
         }
     }
 }

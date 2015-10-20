@@ -55,9 +55,9 @@
     <Compile Include="CashFlowTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CashFlow\dokuku.CashFlow.csproj">
+    <ProjectReference Include="..\CashFlow\dokuku.CashFlowHead.csproj">
       <Project>{d0a6e397-dd09-44b6-89f6-485af7bb9c8b}</Project>
-      <Name>dokuku.CashFlow</Name>
+      <Name>dokuku.CashFlowHead</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

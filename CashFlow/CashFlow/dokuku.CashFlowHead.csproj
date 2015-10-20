@@ -46,9 +46,8 @@
     <Compile Include="Dto\PeriodeDto.cs" />
     <Compile Include="Dto\SalesDto.cs" />
     <Compile Include="Dto\SalesLainDto.cs" />
+    <Compile Include="exceptions\DateAlreadyExistException.cs" />
     <Compile Include="ex\StatusPeriode.cs" />
-    <Compile Include="ItemNota.cs" />
-    <Compile Include="NotaPengeluaran.cs" />
     <Compile Include="Periode.cs" />
     <Compile Include="PeriodeId.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
