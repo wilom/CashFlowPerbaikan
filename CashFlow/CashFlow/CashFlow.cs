@@ -18,7 +18,8 @@ namespace dokuku.CashFlowHead
         private double _totalPenjualan;
         private double _totalPenjualanLain;
         private double _totalPengeluaran;
-        IList<Sales> _items = new List<Sales>();
+        IList<Sales> _itemsSales = new List<Sales>();
+        IList<Pengeluaran> _itemsPengeluaran = new List<Pengeluaran>();
         
         public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal) 
         {
@@ -70,13 +71,13 @@ namespace dokuku.CashFlowHead
 
         }
 
-        public void AddSales(DateTime tgl, double nominal)
+        public void AddSales(DateTime date, double nominal)
         {
-            var newSales = new Sales(tgl, nominal);
-            bool checktgl = _items.Where(x => x.Tanggal == tgl).Count() == 0 ? true : false;
+            var newSales = new Sales(date, nominal);
+            bool checktgl = _itemsSales.Where(x => x.Tanggal == date).Count() == 0 ? true : false;
             //double nominalAmount = Convert.ToDouble(_items.Where(x => x.Tanggal == tgl).Select(x => x.Nominal));
             if (checktgl)
-                this._items.Add(newSales);
+                this._itemsSales.Add(newSales);
             else
                 throw new DateAlreadyExistException();
             Calculate();
@@ -84,16 +85,62 @@ namespace dokuku.CashFlowHead
 
         private void Calculate()
         {
-            var totalSales = CalculateSales();
-            this._totalPenjualan = totalSales;
+            this._totalPenjualan = CalculateSales();
 
-            this._saldoAkhir = this._saldoAwal + this._totalPenjualan;
+            this._totalPengeluaran = CalculatePengeluaran();
+
+            this._saldoAkhir = this._saldoAwal + this._totalPenjualan - this._totalPengeluaran;
 
         }
         private double CalculateSales()
         {
-            return this._items.Sum(x => x.Nominal);
+            return this._itemsSales.Sum(x => x.Nominal);
         }
+
+        //muali pengeluaran-----------
+        private class Pengeluaran 
+        {
+            private string _akun;
+            private double _nominal;
+
+            public Pengeluaran(string akun, double nominal)
+            {
+                this._akun = akun;
+                this._nominal = nominal;
+            }
+
+            public string Akun 
+            {
+                get
+                {
+                return this._akun;
+                }
+            }
+            public double Nominal
+            {
+                get
+                {
+                    return this._nominal;
+                }
+            }
+        }
+
+        public void AddPengeluaran(string akun, double nominal) 
+        {
+            var newPengeluaran = new Pengeluaran(akun,nominal);
+            this._itemsPengeluaran.Add(newPengeluaran);
+            Calculate();
+        }
+        //private void AllCalculatePengeluaran()
+        //{
+        //    var totalPengeluaran = CalculatePengeluaran();
+        //    this._saldoAkhir = this._saldoAwal + this._totalPenjualan - totalPengeluaran;
+        //}
+        private double CalculatePengeluaran()
+        {
+            return this._itemsPengeluaran.Sum(x => x.Nominal);
+        }
+
     }
 
     
