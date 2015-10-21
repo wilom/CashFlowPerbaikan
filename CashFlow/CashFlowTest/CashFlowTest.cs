@@ -55,21 +55,6 @@ namespace UnitTest
             Assert.AreEqual(expected, periodeSnapShot);
         }
 
-        //[TestMethod]
-        //public void TestDate()
-        //{
-           
-        //    DateTime a = new DateTime(2015,10,01);
-        //    int Thn = a.Year;
-        //    int Bln = a.Month;
-        //    int Tgl = a.Day;
-        //    string Tanggalan = ""+Thn+""+Bln+""+Tgl;
-        //    var periodeSnapShot = _periode.Snap();
-        //    var expected = new PeriodeDto() { Id = Tanggalan,IsPeriode=StatusPeriode.Mingguan};
-        //    Assert.AreEqual(expected,periodeSnapShot);
-
-        //}
-
         [TestMethod]
         public void TestTambahPenjualan()
         {
@@ -123,8 +108,12 @@ namespace UnitTest
         [TestMethod]
         public void testPengeluaranCashFlow() 
         {
-             
-            _cashFlow.AddPengeluaran("Ayam",500000.0);
+
+            _cashFlow.AddPengeluaran("Ayam", 500000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 1), 200000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 2), 100000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 3), 300000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 4), 400000.0);
             _cashFlow.AddSales(new DateTime(2015, 10, 5), 200000.0);
             var snapPengeluaran = _cashFlow.Snap();
             var expectedPengeluaran = new CashFlowDto()
@@ -132,8 +121,8 @@ namespace UnitTest
                 TenantId = "ABC",
                 PeriodId = "2015101",
                 SaldoAwal = 500000.0,
-                SaldoAkhir = 500000.0,
-                TotalPenjualan = 500000.0,
+                SaldoAkhir = 1200000.0,
+                TotalPenjualan = 1200000.0,
                 TotalPenjualanLain = 0.0,
                 TotalPengeluaran = 500000.0
             };

@@ -75,7 +75,7 @@ namespace dokuku.CashFlowHead
         {
             var newSales = new Sales(date, nominal);
             bool checktgl = _itemsSales.Where(x => x.Tanggal == date).Count() == 0 ? true : false;
-            //double nominalAmount = Convert.ToDouble(_items.Where(x => x.Tanggal == tgl).Select(x => x.Nominal));
+            
             if (checktgl)
                 this._itemsSales.Add(newSales);
             else
@@ -131,11 +131,7 @@ namespace dokuku.CashFlowHead
             this._itemsPengeluaran.Add(newPengeluaran);
             Calculate();
         }
-        //private void AllCalculatePengeluaran()
-        //{
-        //    var totalPengeluaran = CalculatePengeluaran();
-        //    this._saldoAkhir = this._saldoAwal + this._totalPenjualan - totalPengeluaran;
-        //}
+       
         private double CalculatePengeluaran()
         {
             return this._itemsPengeluaran.Sum(x => x.Nominal);
