@@ -60,15 +60,25 @@ namespace dokuku.CashFlowHead
                     return this._nominal;
                 }
             }
+            public DateTime Tanggal
+            {
+                get
+                {
+                    return this._dateTime;
+                }
+            }
 
         }
 
         public void AddSales(DateTime tgl, double nominal)
         {
-            throw new DateAlreadyExistException();
-
             var newSales = new Sales(tgl, nominal);
-            this._items.Add(newSales);
+            bool checktgl = _items.Where(x => x.Tanggal == tgl).Count() == 0 ? true : false;
+            //double nominalAmount = Convert.ToDouble(_items.Where(x => x.Tanggal == tgl).Select(x => x.Nominal));
+            if (checktgl)
+                this._items.Add(newSales);
+            else
+                throw new DateAlreadyExistException();
             Calculate();
         }
 
@@ -84,7 +94,6 @@ namespace dokuku.CashFlowHead
         {
             return this._items.Sum(x => x.Nominal);
         }
-
     }
 
     

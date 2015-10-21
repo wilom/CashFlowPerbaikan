@@ -73,7 +73,7 @@ namespace UnitTest
         public void TestTambahPenjualan()
         {
             
-            _cashFlow.AddSales(new DateTime(2015, 10, 2), 200000);
+            _cashFlow.AddSales(new DateTime(2015, 10, 1), 200000);
 
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
@@ -90,10 +90,11 @@ namespace UnitTest
         }
 
         [TestMethod]
+
         public void testTambahPenjualanLagi() 
         {
             _cashFlow.AddSales(new DateTime(2015, 10, 2), 200000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 2), 300000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 3), 300000.0);
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
             {
@@ -112,7 +113,8 @@ namespace UnitTest
         [ExpectedException(typeof(DateAlreadyExistException),"Tanggal sudah pernah diinput")]
         public void testHanyaBolehSatuSalesDalamSatuHari() 
         {
-            
+            _cashFlow.AddSales(new DateTime(2015, 10, 4), 200000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 4), 200000.0); 
             
         }
     }
