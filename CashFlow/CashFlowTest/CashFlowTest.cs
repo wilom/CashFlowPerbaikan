@@ -128,5 +128,24 @@ namespace UnitTest
             };
             Assert.AreEqual(expectedPengeluaran, snapPengeluaran);
         }
+
+        [TestMethod]
+        public void testAddPengeluaranJikaAccountSudahAda()
+        {
+            _cashFlow.AddPengeluaran("Ayam", 400000.0);
+            _cashFlow.AddPengeluaran("Ayam", 600000.0);
+            var snapPengeluaran = _cashFlow.Snap();
+            var expectedPengeluaran = new CashFlowDto()
+            {
+                TenantId = "ABC",
+                PeriodId = "2015101",
+                SaldoAwal = 500000.0,
+                SaldoAkhir = 200000.0,
+                TotalPenjualan = 1200000.0,
+                TotalPenjualanLain = 0.0,
+                TotalPengeluaran = 1000000.0
+            };
+            Assert.AreEqual(expectedPengeluaran, snapPengeluaran);
+        }
     }
 }

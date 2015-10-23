@@ -123,20 +123,35 @@ namespace dokuku.CashFlowHead
                     return this._nominal;
                 }
             }
+
+            public void Change(double nominal) 
+            {
+                this._nominal = nominal;
+            }
         }
 
         public void AddPengeluaran(string akun, double nominal) 
         {
             var newPengeluaran = new Pengeluaran(akun,nominal);
-            this._itemsPengeluaran.Add(newPengeluaran);
-            Calculate();
+            
+            var pengeluaran= this._itemsPengeluaran.Select(x => x.Akun == akun).FirstOrDefault();
+            if (pengeluaran == false)
+            {
+                this._itemsPengeluaran.Add(new Pengeluaran(akun,nominal));
+            }
+            else
+            {
+                newPengeluaran.Change(nominal);
+            }
+            
+
+            Calculate();  
         }
        
         private double CalculatePengeluaran()
         {
             return this._itemsPengeluaran.Sum(x => x.Nominal);
         }
-
     }
 
     
