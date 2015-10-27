@@ -5,7 +5,8 @@ using dokuku;
 using dokuku.ex;
 using dokuku.Dto;
 using dokuku.exceptions;
-
+using Moq;
+using dokuku.interfaces;
 namespace UnitTest
 {
     [TestClass]
@@ -18,11 +19,11 @@ namespace UnitTest
         [TestInitialize]
         public void init() 
         {
-            PeriodeId periodid = new PeriodeId("2015101");
+            PeriodeId periodeId = new PeriodeId("2015101");
             
 
-            _cashFlow = new CashFlow("ABC", periodid, 500000.0);
-            _periode = new Periode(periodid,StatusPeriode.Mingguan);
+            _cashFlow = new CashFlow("ABC", periodeId, 500000.0);
+            _periode = new Periode(periodeId,StatusPeriode.Mingguan);
 
         }
         
@@ -109,7 +110,7 @@ namespace UnitTest
         public void testPengeluaranCashFlow() 
         {
 
-            _cashFlow.AddPengeluaran("Ayam", 500000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 500000.0);
             _cashFlow.AddSales(new DateTime(2015, 10, 1), 200000.0);
             _cashFlow.AddSales(new DateTime(2015, 10, 2), 100000.0);
             _cashFlow.AddSales(new DateTime(2015, 10, 3), 300000.0);
@@ -130,22 +131,70 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void testAddPengeluaranJikaAccountSudahAda()
+        public void testUbahPengeluaranJikaAccountSudahAda()
         {
-            _cashFlow.AddPengeluaran("Ayam", 400000.0);
-            _cashFlow.AddPengeluaran("Ayam", 600000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 400000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 600000.0);
             var snapPengeluaran = _cashFlow.Snap();
             var expectedPengeluaran = new CashFlowDto()
             {
                 TenantId = "ABC",
                 PeriodId = "2015101",
                 SaldoAwal = 500000.0,
-                SaldoAkhir = 200000.0,
-                TotalPenjualan = 1200000.0,
+                SaldoAkhir = -100000.0,
+                TotalPenjualan = 0.0,
                 TotalPenjualanLain = 0.0,
-                TotalPengeluaran = 1000000.0
+                TotalPengeluaran = 600000.0
             };
             Assert.AreEqual(expectedPengeluaran, snapPengeluaran);
         }
+
+        [TestMethod]
+        public void testSecenario()
+        {
+            PeriodeId periodid = new PeriodeId("2015101");
+            _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 1), 1500000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 2), 2000000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 1400000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 2400000.0);
+            var snapPengeluaran = _cashFlow.Snap();
+            var expectedPengeluaran = new CashFlowDto()
+            {
+                TenantId = "ABC",
+                PeriodId = "2015101",
+                SaldoAwal = 1000000.0,
+                SaldoAkhir = 2100000.0,
+                TotalPenjualan = 3500000.0,
+                TotalPenjualanLain = 0.0,
+                TotalPengeluaran = 2400000.0
+            };
+            Assert.AreEqual(expectedPengeluaran, snapPengeluaran);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CashflowNotFoundException), "Find")]
+        //[ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        public void testProsesNotaPengeluaran()
+        {
+            var factory = new MockRepository(MockBehavior.Loose);
+            var mockRepository = factory.Create<IRepository>();
+            var mockCashFlow = factory.Create<ICashFlow>();
+            var mockPengeluaran = factory.Create<INotaPengeluaran>();
+            var mockCurrentPeriod = factory.Create<IPeriod>();
+
+            mockRepository.Setup(t => t.FindPeriodForDate(new DateTime(2015, 10, 26))).Returns(mockCurrentPeriod.Object);
+            mockRepository.Setup(t => t.FindCashFlowByPeriod(mockCurrentPeriod.ToString())).Returns(mockCashFlow.Object);
+            mockCurrentPeriod.Setup(t => t.ToString()).Returns("20151101");
+
+
+            var service = new ProcessNotaPengeluaran();
+            service.Repository = mockRepository.Object;
+            service.Process(mockCashFlow.Object);
+
+            factory.Verify();            
+        }
+
     }
+
 }

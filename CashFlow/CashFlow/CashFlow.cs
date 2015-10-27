@@ -130,21 +130,19 @@ namespace dokuku.CashFlowHead
             }
         }
 
-        public void AddPengeluaran(string akun, double nominal) 
+        public void ChangePengeluaran(string akun, double nominal) 
         {
-            var newPengeluaran = new Pengeluaran(akun,nominal);
-            
-            var pengeluaran= this._itemsPengeluaran.Select(x => x.Akun == akun).FirstOrDefault();
-            if (pengeluaran == false)
+            var pengeluaran = this._itemsPengeluaran.FirstOrDefault(x => x.Akun == akun);
+
+            if (pengeluaran == null)
             {
                 this._itemsPengeluaran.Add(new Pengeluaran(akun,nominal));
             }
             else
             {
-                newPengeluaran.Change(nominal);
+                pengeluaran.Change(nominal);
             }
             
-
             Calculate();  
         }
        
@@ -152,6 +150,8 @@ namespace dokuku.CashFlowHead
         {
             return this._itemsPengeluaran.Sum(x => x.Nominal);
         }
+
+       
     }
 
     
