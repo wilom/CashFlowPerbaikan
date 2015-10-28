@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using dokuku;
 
 namespace dokuku.CashFlowHead
 {
     public class CashFlow
-    {
-        
+    {        
         private string _tenanId;
         private PeriodeId _periodId;
         private double _saldoAwal;
@@ -19,6 +19,7 @@ namespace dokuku.CashFlowHead
         private double _totalPenjualanLain;
         private double _totalPengeluaran;
         IList<Sales> _itemsSales = new List<Sales>();
+        IList<SalesLain> _itemsSalesLain = new List<SalesLain>();
         IList<Pengeluaran> _itemsPengeluaran = new List<Pengeluaran>();
         
         public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal) 
@@ -48,6 +49,7 @@ namespace dokuku.CashFlowHead
         {
             private DateTime _dateTime;
             private double _nominal;
+            
             public Sales(DateTime date, double nominal)
             {
                 this._dateTime = date;
@@ -68,7 +70,7 @@ namespace dokuku.CashFlowHead
                     return this._dateTime;
                 }
             }
-
+            
         }
 
         public void AddSales(DateTime date, double nominal)
@@ -81,20 +83,54 @@ namespace dokuku.CashFlowHead
             else
                 throw new DateAlreadyExistException();
             Calculate();
-        }
+        }      
 
-        private void Calculate()
-        {
-            this._totalPenjualan = CalculateSales();
-
-            this._totalPengeluaran = CalculatePengeluaran();
-
-            this._saldoAkhir = this._saldoAwal + this._totalPenjualan - this._totalPengeluaran;
-
-        }
         private double CalculateSales()
         {
             return this._itemsSales.Sum(x => x.Nominal);
+        }
+
+        //mulain saleslain
+        public class SalesLain
+        {
+            private DateTime _dateTimeLain;
+            private double _nominalLain;
+            public SalesLain(DateTime dateLain, double nominalLain)
+            {
+                this._dateTimeLain = dateLain;
+                this._nominalLain = nominalLain;
+            }
+            public double NominalLain
+            {
+                get
+                {
+                    return this._nominalLain;
+                }
+            }
+            public DateTime TanggalLain
+            {
+                get
+                {
+                    return this._dateTimeLain;
+                }
+            }
+        }
+
+        public void AddSalesLain(DateTime dateLain, double nominalLain)
+        {
+            var newSalesLain = new SalesLain(dateLain, nominalLain);
+            bool checktgl = _itemsSalesLain.Where(x => x.TanggalLain == dateLain).Count() == 0 ? true : false;
+
+            if (checktgl)
+                this._itemsSalesLain.Add(newSalesLain);
+            else
+                throw new DateAlreadyExistException();
+            Calculate();
+        }
+
+        private double CalculateSalesLain()
+        {
+            return this._itemsSalesLain.Sum(x => x.NominalLain);
         }
 
         //muali pengeluaran-----------
@@ -151,7 +187,17 @@ namespace dokuku.CashFlowHead
             return this._itemsPengeluaran.Sum(x => x.Nominal);
         }
 
-       
+        private void Calculate()
+        {
+            this._totalPenjualan = CalculateSales();
+
+            this._totalPenjualanLain = CalculateSalesLain();
+
+            this._totalPengeluaran = CalculatePengeluaran();
+
+            this._saldoAkhir = this._saldoAwal + this._totalPenjualan + this._totalPenjualanLain - this._totalPengeluaran;
+
+        }
     }
 
     
