@@ -7,6 +7,7 @@ using dokuku.Dto;
 using dokuku.exceptions;
 using Moq;
 using dokuku.interfaces;
+using System.Collections.Generic;
 namespace UnitTest
 {
     [TestClass]
@@ -223,26 +224,34 @@ namespace UnitTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(CashflowNotFoundException), "Find")]
-        //[ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+       
         public void testProsesNotaPengeluaran()
         {
+            var transactionDate = new DateTime(2015, 10, 26);
+            var periodId = "20151104";
+            var listAkun = new string[] { "Ayam" };
+            var listSummaryAkun = new List<SummaryAkunDto>() 
+            {
+            new SummaryAkunDto(){ PeriodeId ="Ayam", Nominal=600000.0}
+            };
             var factory = new MockRepository(MockBehavior.Loose);
             var mockRepository = factory.Create<IRepository>();
             var mockCashFlow = factory.Create<ICashFlow>();
             var mockPengeluaran = factory.Create<INotaPengeluaran>();
             var mockCurrentPeriod = factory.Create<IPeriod>();
-
-            mockRepository.Setup(t => t.FindPeriodForDate(new DateTime(2015, 10, 26))).Returns(mockCurrentPeriod.Object);
-            mockRepository.Setup(t => t.FindCashFlowByPeriod(mockCurrentPeriod.ToString())).Returns(mockCashFlow.Object);
-            mockCurrentPeriod.Setup(t => t.ToString()).Returns("20151101");
-
+            mockRepository.Setup(t => t.FindPeriodForDate(transactionDate)).Returns(mockCurrentPeriod.Object);
+            mockCurrentPeriod.SetupGet(t => t.PeriodId).Returns(periodId);
+            mockRepository.Setup(t => t.FindCashFlowByPeriod(periodId)).Returns(mockCashFlow.Object);
+            mockPengeluaran.SetupGet(t => t.Date).Returns(transactionDate);
+            mockPengeluaran.Setup(t => t.ListAkun()).Returns(listAkun);
+            mockRepository.Setup(t => t.ListSummaryAkunIn(mockCurrentPeriod.Object, listAkun)).Returns(listSummaryAkun);
+            mockCashFlow.Setup(t => t.ChangePengeluaran(It.IsAny<string>(), It.IsAny<double>()));
+            mockRepository.Setup(t => t.Save(mockCashFlow.Object));
 
             var service = new ProcessNotaPengeluaran();
             service.Repository = mockRepository.Object;
-            service.Process(mockCashFlow.Object);
-
-            factory.Verify();            
+            service.Process(mockPengeluaran.Object);
+            factory.VerifyAll();
         }
 
     }

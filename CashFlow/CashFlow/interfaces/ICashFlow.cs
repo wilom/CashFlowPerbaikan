@@ -8,5 +8,6 @@ namespace dokuku.interfaces
 {
     public interface ICashFlow
     {
+        object ChangePengeluaran(string akun, double nominal);
     }
 }

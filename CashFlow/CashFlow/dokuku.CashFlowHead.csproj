@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CashFlow.cs" />
+    <Compile Include="Dto\SummaryAkunDto.cs" />
     <Compile Include="exceptions\CashflowNotFoundException.cs" />
     <Compile Include="Dto\CashFlowDto.cs" />
     <Compile Include="Dto\PeriodeDto.cs" />
@@ -51,7 +52,7 @@
     <Compile Include="interfaces\IRepository.cs" />
     <Compile Include="Periode.cs" />
     <Compile Include="PeriodeId.cs" />
-    <Compile Include="ProcessNotaPengeluaran.cs" />
+    <Compile Include="service\ProcessNotaPengeluaran.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

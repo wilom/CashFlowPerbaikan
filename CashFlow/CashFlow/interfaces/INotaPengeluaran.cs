@@ -8,5 +8,10 @@ namespace dokuku.interfaces
 {
     public interface INotaPengeluaran
     {
+
+        DateTime Date { get; }
+
+        object ListAkun();
+
     }
 }

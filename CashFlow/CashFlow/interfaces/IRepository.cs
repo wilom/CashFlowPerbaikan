@@ -8,8 +8,16 @@ namespace dokuku.interfaces
 {
     public interface IRepository
     {
-        object FindPeriodForDate(DateTime dateTime);
+        object FindPeriodForDate(DateTime date);
 
-        object FindCashFlowByPeriod(string p);
+        object FindCashFlowByPeriod(string periodId);
+
+        object ListSummaryAkunIn(IPeriod period, string[] listAkun);
+
+        object Save(ICashFlow cashFlow);
+
+        object ListSummaryAkunIn(object period, object listAkun);
+
+        void Save(object cashFlow);
     }
 }
