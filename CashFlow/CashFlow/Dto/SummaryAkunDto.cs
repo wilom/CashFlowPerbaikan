@@ -8,8 +8,10 @@ namespace dokuku.Dto
 {
     public class SummaryAkunDto
     {
-        public string PeriodeId { get; set; }
+        public string PeriodId { get; set; }
 
         public double Nominal { get; set; }
+
+       
     }
 }

@@ -11,7 +11,7 @@ namespace dokuku.interfaces
 
         DateTime Date { get; }
 
-        object ListAkun();
+        string[] ListAkun();
 
     }
 }

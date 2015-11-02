@@ -8,6 +8,7 @@ namespace dokuku.interfaces
 {
     public interface IPeriod
     {
+  
         string PeriodId { get; }
     }
 }

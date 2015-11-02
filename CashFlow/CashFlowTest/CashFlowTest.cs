@@ -232,7 +232,7 @@ namespace UnitTest
             var listAkun = new string[] { "Ayam" };
             var listSummaryAkun = new List<SummaryAkunDto>() 
             {
-            new SummaryAkunDto(){ PeriodeId ="Ayam", Nominal=600000.0}
+            new SummaryAkunDto(){ PeriodId ="Ayam", Nominal=600000.0}
             };
             var factory = new MockRepository(MockBehavior.Loose);
             var mockRepository = factory.Create<IRepository>();
