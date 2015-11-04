@@ -10,8 +10,9 @@ namespace dokuku.Dto
     {
         public string PeriodId { get; set; }
 
-        public double Nominal { get; set; }
+        public string Akun { get; set; }
 
+        public double Nominal { get; set; }
        
     }
 }

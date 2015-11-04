@@ -40,16 +40,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CashFlow.cs" />
+    <Compile Include="Dto\NotaPengeluaranDto.cs" />
     <Compile Include="Dto\SummaryAkunDto.cs" />
     <Compile Include="exceptions\CashflowNotFoundException.cs" />
     <Compile Include="Dto\CashFlowDto.cs" />
     <Compile Include="Dto\PeriodeDto.cs" />
     <Compile Include="exceptions\DateAlreadyExistException.cs" />
+    <Compile Include="exceptions\PeriodeNotFoundException.cs" />
     <Compile Include="ex\StatusPeriode.cs" />
     <Compile Include="interfaces\ICashFlow.cs" />
     <Compile Include="interfaces\INotaPengeluaran.cs" />
     <Compile Include="interfaces\IPeriod.cs" />
     <Compile Include="interfaces\IRepository.cs" />
+    <Compile Include="NotaPengeluaran.cs" />
     <Compile Include="Periode.cs" />
     <Compile Include="PeriodeId.cs" />
     <Compile Include="service\ProcessNotaPengeluaran.cs" />

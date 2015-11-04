@@ -15,10 +15,14 @@ namespace dokuku
         public void Process(interfaces.INotaPengeluaran notaPengeluaran)
         {
             var period = this.Repository.FindPeriodForDate(notaPengeluaran.Date);
+            if (period == null) 
+            {
+                throw new PeriodeNotFoundException();
+            }
             var cashFlow = this.Repository.FindCashFlowByPeriod(period.PeriodId);
             if (cashFlow == null)
             {
-                
+                throw new CashflowNotFoundException();
             }
             else 
             {
@@ -26,7 +30,7 @@ namespace dokuku
                 var listSummary = this.Repository.ListSummaryAkunIn(period,listAkun);
                 foreach (var sumakun in listSummary)
                 {
-                    cashFlow.ChangePengeluaran(sumakun.PeriodId, sumakun.Nominal);
+                    cashFlow.ChangePengeluaran(sumakun.Akun, sumakun.Nominal);
                 }
                 this.Repository.Save(cashFlow);
             }
