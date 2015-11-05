@@ -12,10 +12,6 @@ namespace dokuku.Dto
 
         public string NoNota { get; set; }
 
-        public string Akun { get; set; }
-
-        public double Nominal { get; set; }
-
         public double TotalNota { get; set; }
 
         public override bool Equals(object obj)
@@ -24,8 +20,6 @@ namespace dokuku.Dto
             var cmp = (NotaPengeluaranDto)obj;
             return this.Tanggal.Equals(cmp.Tanggal) &&
                 this.NoNota.Equals(cmp.NoNota) &&
-                this.Akun.Equals(cmp.Akun) &&
-                this.Nominal.Equals(cmp.Nominal)&&
                 this.TotalNota.Equals(cmp.TotalNota);
         }
 

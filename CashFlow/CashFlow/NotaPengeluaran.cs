@@ -11,8 +11,8 @@ namespace dokuku
     {
         private DateTime _dateTime;
         private string _noNota;
-        private string _akun;
-        private double _nominal;
+        //private string _akun;
+        //private double _nominal;
         private double _totalNota;
         IList<AkunPengeluaran> _itemsAkun = new List<AkunPengeluaran>();
 
@@ -28,9 +28,7 @@ namespace dokuku
             return new Dto.NotaPengeluaranDto()
             {
                 Tanggal = this._dateTime,
-                NoNota = this._noNota,
-                Akun = this._akun,
-                Nominal = this._nominal,
+                NoNota = this._noNota,                
                 TotalNota = this._totalNota
             };
         }

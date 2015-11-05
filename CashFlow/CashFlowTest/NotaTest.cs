@@ -25,9 +25,7 @@ namespace UnitTest
             var expected = new NotaPengeluaranDto()
             {
                 Tanggal = new DateTime(2015, 10, 26),
-                NoNota = "123",
-                Akun = null,
-                Nominal = 0.0,
+                NoNota = "123",               
                 TotalNota = 0.0
             };
             Assert.AreEqual(expected, notaPengeluaranSnapshot);
@@ -43,9 +41,7 @@ namespace UnitTest
             var expected = new NotaPengeluaranDto()
             {
                 Tanggal = new DateTime(2015, 10, 26),
-                NoNota = "123",
-                Akun = "Ayam",
-                Nominal = 100000.0,
+                NoNota = "123",                
                 TotalNota = 100000.0
             };
             Assert.AreEqual(expected, notaPengeluaranSnapshot);
