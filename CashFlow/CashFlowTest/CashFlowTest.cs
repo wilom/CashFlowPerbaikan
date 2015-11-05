@@ -22,7 +22,6 @@ namespace UnitTest
         {
             PeriodeId periodeId = new PeriodeId("2015101");
             
-
             _cashFlow = new CashFlow("ABC", periodeId, 500000.0);
             _periode = new Periode(periodeId,StatusPeriode.Mingguan);
             _notaPengeluaran = new NotaPengeluaran(new DateTime(2015, 10, 26), "123");
@@ -306,8 +305,9 @@ namespace UnitTest
             {
                 Tanggal = new DateTime(2015, 10, 26),
                 NoNota = "123",
-                //Akun = null,
-                //Nominal = 0.0
+                Akun = null,
+                Nominal = 0.0,
+                TotalNota = 0.0
             };
             Assert.AreEqual(expected, notaPengeluaranSnapshot);
         }
@@ -316,17 +316,18 @@ namespace UnitTest
 
         public void testAddAkunNotaPengeluaran()
         {
-           
-            //_notaPengeluaran.AddAkun("Ayam", 100000.0);
-            //var notaPengeluaranSnapshot = _notaPengeluaran.Snap();
-            //var expected = new NotaPengeluaranDto()
-            //{
-            //    Tanggal = new DateTime(2015, 10, 26),
-            //    NoNota = "123",
-            //    //Akun = "Ayam",
-            //    //Nominal = 100000.0
-            //};
-            //Assert.AreEqual(expected, notaPengeluaranSnapshot);
+
+            _notaPengeluaran.AddAkun("Ayam", 100000.0);
+            var notaPengeluaranSnapshot = _notaPengeluaran.Snap();
+            var expected = new NotaPengeluaranDto()
+            {
+                Tanggal = new DateTime(2015, 10, 26),
+                NoNota = "123",
+                Akun = "Ayam",
+                Nominal = 100000.0,
+                TotalNota = 100000.0
+            };
+            Assert.AreEqual(expected, notaPengeluaranSnapshot);
         }
     }
 
