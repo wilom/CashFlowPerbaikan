@@ -1,4 +1,5 @@
-﻿using dokuku.exceptions;
+﻿using dokuku.Dto;
+using dokuku.exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,7 @@ namespace dokuku
     public class NotaPengeluaran
     {
         private DateTime _dateTime;
-        private string _noNota;
-        //private string _akun;
-        //private double _nominal;
+        private string _noNota;       
         private double _totalNota;
         IList<AkunPengeluaran> _itemsAkun = new List<AkunPengeluaran>();
 
@@ -29,33 +28,49 @@ namespace dokuku
             {
                 Tanggal = this._dateTime,
                 NoNota = this._noNota,                
-                TotalNota = this._totalNota
+                TotalNota = this._totalNota,
+                Items = SetToItems()
             };
         }
 
-        public void AddAkun(string akun, double nominal)
+        private IList<Items> SetToItems()
         {
-            var newAkun = new AkunPengeluaran(akun, nominal);
-            //bool checkAkun = _itemsAkun.Where(x => x.Akun == akun).Count() == 0 ? true : false;
-            //if (checkAkun)
-            //{
-                this._itemsAkun.Add(newAkun);
-            //}
-            //else 
-            //{
-            //    throw new AkunPengeluaranException();
-            //}
+            //return this._itemsAkun.Select(x => x.SnapAkun());
+
+
+            IList<Items> items = new List<Items>();
+            foreach (var item in this._itemsAkun)
+            {
+                Items result = new Items()
+                {
+                    Akun = item.Akun,
+                    Jumlah = item.Jumalah,
+                    Nominal = item.Nominal
+                };
+                items.Add(result);
+            }
+            return items;
+        }
+
+        public void AddAkun(string akun, double nominal, int jumlah)
+        {
+            var newAkun = new AkunPengeluaran(akun, nominal, jumlah);
+          
+            this._itemsAkun.Add(newAkun);
+          
             CalculateNotaPengeluaran();
         }
         private class AkunPengeluaran
         {
             private string _akun;
             private double _nominal;
+            private int _jumlah;
 
-            public AkunPengeluaran(string akun, double nominal)
+            public AkunPengeluaran(string akun, double nominal, int jumlah)
             {
                 this._akun = akun;
                 this._nominal = nominal;
+                this._jumlah = jumlah;
             }
 
             public string Akun
@@ -72,8 +87,25 @@ namespace dokuku
                     return this._nominal;
                 }
             }
-        }
+            public int Jumalah
+            {
+                get
+                {
+                    return this._jumlah;
+                }
+            }
 
+            public Items SnapAkun()
+            {
+                return new Items() 
+                {
+                    Akun = this._akun,
+                    Jumlah = this._jumlah,
+                    Nominal = this._nominal
+                };
+            }
+        }
+       
         private double CalculateItemNotaPengeluaran() 
         {
             return this._itemsAkun.Sum(x => x.Nominal);

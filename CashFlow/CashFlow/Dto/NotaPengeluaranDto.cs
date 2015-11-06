@@ -14,6 +14,8 @@ namespace dokuku.Dto
 
         public double TotalNota { get; set; }
 
+        public IList<Items> Items { get; set; }
+
         public override bool Equals(object obj)
         {
             if (!(obj is NotaPengeluaranDto)) return false;
@@ -22,7 +24,6 @@ namespace dokuku.Dto
                 this.NoNota.Equals(cmp.NoNota) &&
                 this.TotalNota.Equals(cmp.TotalNota);
         }
-
-       
     }
+
 }

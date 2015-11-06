@@ -53,6 +53,7 @@
     <Compile Include="interfaces\INotaPengeluaran.cs" />
     <Compile Include="interfaces\IPeriod.cs" />
     <Compile Include="interfaces\IRepository.cs" />
+    <Compile Include="Items.cs" />
     <Compile Include="NotaPengeluaran.cs" />
     <Compile Include="Periode.cs" />
     <Compile Include="PeriodeId.cs" />
