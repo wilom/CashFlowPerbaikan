@@ -87,9 +87,7 @@ namespace dokuku
         private double CalculateNominalPengeluaran()
         {
             return this._itemsAkun.Sum(x => x.Nominal);
-        }
-
-       
+        }      
 
     }
 }
