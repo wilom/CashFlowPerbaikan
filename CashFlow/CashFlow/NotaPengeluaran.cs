@@ -33,23 +33,9 @@ namespace dokuku
             };
         }
 
-        private IList<Items> SetToItems()
+        private IList<dokuku.Dto.NotaPengeluaranDto.ItemNotaDto>  SetToItems()
         {
-            //return this._itemsAkun.Select(x => x.SnapAkun());
-
-
-            IList<Items> items = new List<Items>();
-            foreach (var item in this._itemsAkun)
-            {
-                Items result = new Items()
-                {
-                    Akun = item.Akun,
-                    Jumlah = item.Jumalah,
-                    Nominal = item.Nominal
-                };
-                items.Add(result);
-            }
-            return items;
+            return this._itemsAkun.Select(x => x.SnapAkun()).ToList();                      
         }
 
         public void AddAkun(string akun, double nominal, int jumlah)
@@ -72,14 +58,16 @@ namespace dokuku
                 this._nominal = nominal;
                 this._jumlah = jumlah;
             }
-
-            public string Akun
+            public dokuku.Dto.NotaPengeluaranDto.ItemNotaDto SnapAkun()
             {
-                get
+                return new dokuku.Dto.NotaPengeluaranDto.ItemNotaDto()
                 {
-                    return this._akun;
-                }
+                    Akun = this._akun,
+                    Jumlah = this._jumlah,
+                    Nominal = this._nominal
+                };
             }
+                       
             public double Nominal
             {
                 get
@@ -87,34 +75,21 @@ namespace dokuku
                     return this._nominal;
                 }
             }
-            public int Jumalah
-            {
-                get
-                {
-                    return this._jumlah;
-                }
-            }
-
-            public Items SnapAkun()
-            {
-                return new Items() 
-                {
-                    Akun = this._akun,
-                    Jumlah = this._jumlah,
-                    Nominal = this._nominal
-                };
-            }
+            
+            
         }
        
-        private double CalculateItemNotaPengeluaran() 
+        private void CalculateNotaPengeluaran() 
+        {
+            this._totalNota = this.CalculateNominalPengeluaran();
+        }
+
+        private double CalculateNominalPengeluaran()
         {
             return this._itemsAkun.Sum(x => x.Nominal);
         }
 
-        public void CalculateNotaPengeluaran() 
-        {
-            this._totalNota = CalculateItemNotaPengeluaran();
-        }
+       
 
     }
 }
