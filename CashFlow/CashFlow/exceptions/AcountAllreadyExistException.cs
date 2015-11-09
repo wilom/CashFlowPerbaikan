@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dokuku.exceptions
 {
-    public class AkunPengeluaranException : ApplicationException
+    public class AcountAllreadyExistException : ApplicationException
     {
     }
 }

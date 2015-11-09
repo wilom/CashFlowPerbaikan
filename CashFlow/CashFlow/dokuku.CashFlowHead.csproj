@@ -42,7 +42,7 @@
     <Compile Include="CashFlow.cs" />
     <Compile Include="Dto\NotaPengeluaranDto.cs" />
     <Compile Include="Dto\SummaryAkunDto.cs" />
-    <Compile Include="exceptions\AkunPengeluaranException.cs" />
+    <Compile Include="exceptions\AcountAllreadyExistException.cs" />
     <Compile Include="exceptions\CashflowNotFoundException.cs" />
     <Compile Include="Dto\CashFlowDto.cs" />
     <Compile Include="Dto\PeriodeDto.cs" />

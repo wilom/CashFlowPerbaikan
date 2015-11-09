@@ -22,8 +22,7 @@ namespace dokuku.Dto
             var cmp = (NotaPengeluaranDto)obj;
             return this.Tanggal.Equals(cmp.Tanggal) &&
                 this.NoNota.Equals(cmp.NoNota) &&
-                this.TotalNota.Equals(cmp.TotalNota) &&
-                this.Items.Equals(cmp.Items);
+                this.TotalNota.Equals(cmp.TotalNota); 
         }
 
         public class ItemNotaDto
