@@ -10,25 +10,22 @@ namespace UnitTest
     public class NotaTest
     {
         NotaPengeluaran _notaPengeluaran = null;
+
         [TestInitialize]
         public void init()
-        {
-            
+        {            
             _notaPengeluaran = new NotaPengeluaran(new DateTime(2015, 10, 26), "123");
-
         }
-        [TestMethod]
 
+        [TestMethod]
         public void testMembuatNotaPengeluaran()
         {
-
             var notaPengeluaranSnapshot = _notaPengeluaran.Snap();
             var expected = new NotaPengeluaranDto()
             {
                 Tanggal = new DateTime(2015, 10, 26),
                 NoNota = "123",               
-                TotalNota = 0.0
-                
+                TotalNota = 0.0                
             };
             Assert.AreEqual(expected, notaPengeluaranSnapshot);
         }
@@ -36,7 +33,6 @@ namespace UnitTest
         [TestMethod]
         public void testAddAkunNotaPengeluaran()
         {
-
             _notaPengeluaran.AddAkun("Ayam", 100000.0, 1);
             var notaPengeluaranSnapshot = _notaPengeluaran.Snap();
             var expected = new NotaPengeluaranDto()
@@ -50,8 +46,7 @@ namespace UnitTest
             var entry1=notaPengeluaranSnapshot.Items[0];
             Assert.AreEqual("Ayam",entry1.Akun);
             Assert.AreEqual(1, entry1.Jumlah);
-            Assert.AreEqual(100000.0, entry1.Nominal);            
-           
+            Assert.AreEqual(100000.0, entry1.Nominal);
         }
         
         [TestMethod]
@@ -63,9 +58,29 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void testChangeNotaPengeluaran()
+        {
+            _notaPengeluaran.AddAkun("Ayam", 100000.0, 1);
+            _notaPengeluaran.ChangeNotaPengeluaran("Ayam", 100000.0, 1);
+            _notaPengeluaran.ChangeNotaPengeluaran("Ayam", 200000.0, 1);
+            var notaPengeluaranSnapshot = _notaPengeluaran.Snap();
+            var expected = new NotaPengeluaranDto()
+            {
+                Tanggal = new DateTime(2015, 10, 26),
+                NoNota = "123",
+                TotalNota = 200000.0
+            };
+            Assert.AreEqual(expected, notaPengeluaranSnapshot);
+            Assert.AreEqual(1, notaPengeluaranSnapshot.Items.Count);
+            var entry1 = notaPengeluaranSnapshot.Items[0];
+            Assert.AreEqual("Ayam", entry1.Akun);
+            Assert.AreEqual(1, entry1.Jumlah);
+            Assert.AreEqual(200000.0, entry1.Nominal);
+        }
+
+        [TestMethod]
         public void testSecenarioNotaPengeluaran()
         {
-
             _notaPengeluaran.AddAkun("Ayam", 100000.0, 1);
             _notaPengeluaran.AddAkun("Bebek", 200000.0, 1);
             _notaPengeluaran.AddAkun("Pembungkus", 50000, 3);
@@ -93,7 +108,6 @@ namespace UnitTest
             Assert.AreEqual("Pembungkus", entry3.Akun);
             Assert.AreEqual(3, entry3.Jumlah);
             Assert.AreEqual(50000.0, entry3.Nominal);
-
         }
     }
 }

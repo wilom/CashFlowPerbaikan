@@ -43,9 +43,14 @@ namespace dokuku
             var newAkun = new AkunPengeluaran(akun, nominal, jumlah);
             bool checkAkun = _itemsAkun.Where(x => x.Akun == akun).Count() == 0 ? true : false;
             if (checkAkun)
+            {
                 this._itemsAkun.Add(newAkun);
+            }
             else
+            {
                 throw new AcountAllreadyExistException();
+            }
+
             CalculateNotaPengeluaran();
         }
         private class AkunPengeluaran
@@ -84,8 +89,34 @@ namespace dokuku
                     return this._nominal;
                 }
             }
+
+            public int Jumlah
+            {
+                get
+                {
+                    return this._jumlah;
+                }
+            }
+            public void Change(double nominal)
+            {
+                this._nominal = nominal;
+            }
             
             
+        }
+
+        public void ChangeNotaPengeluaran(string akun, double nominal, int jumlah)
+        {
+            var notaPengeluaran = this._itemsAkun.FirstOrDefault(x => x.Akun == akun);
+            if (notaPengeluaran == null)
+            {
+                this._itemsAkun.Add(new AkunPengeluaran(akun, nominal, jumlah));
+            }
+            else
+            {
+                notaPengeluaran.Change(nominal);
+            }
+            CalculateNotaPengeluaran();  
         }
        
         private void CalculateNotaPengeluaran() 

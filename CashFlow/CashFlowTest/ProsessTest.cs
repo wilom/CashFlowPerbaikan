@@ -13,7 +13,6 @@ namespace UnitTest
     public class ProsessTest
     {
         [TestMethod]
-
         public void testProsesNotaPengeluaran()
         {
             var transactionDate = new DateTime(2015, 10, 26);

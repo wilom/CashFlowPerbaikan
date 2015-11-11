@@ -24,8 +24,6 @@ namespace UnitTest
             
             _cashFlow = new CashFlow("ABC", periodeId, 500000.0);
             _periode = new Periode(periodeId,StatusPeriode.Mingguan);
-            
-
         }
         
         [TestMethod]
@@ -60,8 +58,7 @@ namespace UnitTest
         //mulain penjualan
         [TestMethod]
         public void testTambahPenjualan()
-        {
-            
+        {            
             _cashFlow.AddSales(new DateTime(2015, 10, 1), 200000);
 
             var cashFlowSnapshot = _cashFlow.Snap();
@@ -79,7 +76,6 @@ namespace UnitTest
         }
 
         [TestMethod]
-
         public void testTambahPenjualanLagi() 
         {
             _cashFlow.AddSales(new DateTime(2015, 10, 2), 200000.0);
@@ -152,13 +148,12 @@ namespace UnitTest
         {
             _cashFlow.AddSalesLain(new DateTime(2015, 10, 4), 200000.0);
             _cashFlow.AddSalesLain(new DateTime(2015, 10, 4), 200000.0);
-
         }
+
         //mulai pengeluaran------------------------------------
         [TestMethod]
         public void testPengeluaranCashFlow() 
         {
-
             _cashFlow.ChangePengeluaran("Ayam", 500000.0);
             _cashFlow.AddSales(new DateTime(2015, 10, 1), 200000.0);
             _cashFlow.AddSales(new DateTime(2015, 10, 2), 100000.0);
@@ -222,6 +217,32 @@ namespace UnitTest
             };
             Assert.AreEqual(expectedPengeluaran, snapPengeluaran);
         }    
+
+        [TestMethod]
+        public void testMenginstanceDariSnapshot()
+        {
+            PeriodeId periodid = new PeriodeId("2015101");
+            _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 1), 1500000.0);
+            _cashFlow.AddSales(new DateTime(2015, 10, 2), 2000000.0);
+            _cashFlow.AddSalesLain(new DateTime(2015, 10, 1), 1500000.0);
+            _cashFlow.AddSalesLain(new DateTime(2015, 10, 2), 2000000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 1400000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 2400000.0);
+            var snapshot = new CashFlowDto()
+            {
+                TenantId = "ABC",
+                PeriodId = "2015101",
+                SaldoAwal = 1000000.0,
+                SaldoAkhir = 5600000.0,
+                TotalPenjualan = 3500000.0,
+                TotalPenjualanLain = 3500000.0,
+                TotalPengeluaran = 2400000.0
+            };
+            var cashflow = new CashFlow(snapshot);
+            var loadedSanpshot = cashflow.Snap();
+            Assert.AreEqual(snapshot, loadedSanpshot);
+        }
     }
 
 }

@@ -20,15 +20,25 @@ namespace dokuku.CashFlowHead
         private double _totalPengeluaran;
         IList<Sales> _itemsSales = new List<Sales>();
         IList<SalesLain> _itemsSalesLain = new List<SalesLain>();
-        IList<Pengeluaran> _itemsPengeluaran = new List<Pengeluaran>();
+        IList<Pengeluaran> _itemsPengeluaran = new List<Pengeluaran>();        
         
         public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal) 
         {
             this._tenanId = tenanId;
             this._periodId = periodId;
             this._saldoAwal = saldoAwal;
-            Calculate();
-            
+            Calculate();            
+        }
+
+        public CashFlow(CashFlowDto snapshot)
+        {                      
+           this._tenanId=snapshot.TenantId;
+           this._periodId= new PeriodeId (snapshot.PeriodId) ;
+           this._saldoAwal = snapshot.SaldoAwal;
+           this._saldoAkhir = snapshot.SaldoAkhir;
+           this._totalPenjualan = snapshot.TotalPenjualan;
+           this._totalPenjualanLain = snapshot.TotalPenjualanLain;
+           this._totalPengeluaran = snapshot.TotalPengeluaran;           
         }
        
         public Dto.CashFlowDto Snap()
@@ -55,7 +65,6 @@ namespace dokuku.CashFlowHead
                 this._dateTime = date;
                 this._nominal = nominal;
             }
-
             public double Nominal
             {
                 get
@@ -69,8 +78,7 @@ namespace dokuku.CashFlowHead
                 {
                     return this._dateTime;
                 }
-            }
-            
+            }            
         }
 
         public void AddSales(DateTime date, double nominal)
@@ -159,7 +167,6 @@ namespace dokuku.CashFlowHead
                     return this._nominal;
                 }
             }
-
             public void Change(double nominal) 
             {
                 this._nominal = nominal;
@@ -177,8 +184,7 @@ namespace dokuku.CashFlowHead
             else
             {
                 pengeluaran.Change(nominal);
-            }
-            
+            }            
             Calculate();  
         }
        
@@ -196,9 +202,6 @@ namespace dokuku.CashFlowHead
             this._totalPengeluaran = CalculatePengeluaran();
 
             this._saldoAkhir = this._saldoAwal + this._totalPenjualan + this._totalPenjualanLain - this._totalPengeluaran;
-
         }
-    }
-
-    
+    }    
 }
