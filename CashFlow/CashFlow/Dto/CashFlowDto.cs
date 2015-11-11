@@ -22,6 +22,8 @@ namespace dokuku.Dto
 
         public double TotalPengeluaran { get; set; }
 
+        public IList<NotaPengeluaranDto.ItemNotaDto> Items { get; set; }
+
         public override bool Equals(object obj)
         {
             if (!(obj is CashFlowDto)) return false;
@@ -33,6 +35,6 @@ namespace dokuku.Dto
                 this.TotalPenjualan.Equals(cmp.TotalPenjualan) &&
                 this.TotalPenjualanLain.Equals(cmp.TotalPenjualanLain) &&
                 this.TotalPengeluaran.Equals(cmp.TotalPengeluaran);
-        }
+        }        
     }
 }

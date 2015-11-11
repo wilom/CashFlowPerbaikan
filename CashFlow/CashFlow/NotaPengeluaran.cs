@@ -101,13 +101,15 @@ namespace dokuku
             {
                 this._nominal = nominal;
             }
-            
-            
+            public void ChangeJumlah(int jumlah)
+            {
+                this._jumlah = jumlah;
+            }            
         }
 
         public void ChangeNotaPengeluaran(string akun, double nominal, int jumlah)
         {
-            var notaPengeluaran = this._itemsAkun.FirstOrDefault(x => x.Akun == akun);
+            var notaPengeluaran = this._itemsAkun.FirstOrDefault(x => x.Akun == akun);            
             if (notaPengeluaran == null)
             {
                 this._itemsAkun.Add(new AkunPengeluaran(akun, nominal, jumlah));
@@ -115,6 +117,7 @@ namespace dokuku
             else
             {
                 notaPengeluaran.Change(nominal);
+                notaPengeluaran.ChangeJumlah(jumlah);
             }
             CalculateNotaPengeluaran();  
         }

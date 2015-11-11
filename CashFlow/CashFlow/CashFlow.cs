@@ -18,9 +18,10 @@ namespace dokuku.CashFlowHead
         private double _totalPenjualan;
         private double _totalPenjualanLain;
         private double _totalPengeluaran;
-        IList<Sales> _itemsSales = new List<Sales>();
-        IList<SalesLain> _itemsSalesLain = new List<SalesLain>();
-        IList<Pengeluaran> _itemsPengeluaran = new List<Pengeluaran>();        
+        IList<Penjualan> _itemsPenjualan = new List<Penjualan>();
+        IList<PenjualanLain> _itemsPenjualanLain = new List<PenjualanLain>();
+        IList<Pengeluaran> _itemsPengeluaran = new List<Pengeluaran>();
+        
         
         public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal) 
         {
@@ -38,7 +39,7 @@ namespace dokuku.CashFlowHead
            this._saldoAkhir = snapshot.SaldoAkhir;
            this._totalPenjualan = snapshot.TotalPenjualan;
            this._totalPenjualanLain = snapshot.TotalPenjualanLain;
-           this._totalPengeluaran = snapshot.TotalPengeluaran;           
+           this._totalPengeluaran = snapshot.TotalPengeluaran;      
         }
        
         public Dto.CashFlowDto Snap()
@@ -51,20 +52,25 @@ namespace dokuku.CashFlowHead
                 SaldoAkhir = this._saldoAkhir,
                 TotalPenjualan = this._totalPenjualan,
                 TotalPenjualanLain = this._totalPenjualanLain,
-                TotalPengeluaran = this._totalPengeluaran
+                TotalPengeluaran = this._totalPengeluaran,
+                Items = SetToItems()
             };
         }
-
-        private class Sales
+        private IList<dokuku.Dto.NotaPengeluaranDto.ItemNotaDto> SetToItems()
+        {
+            return this._itemsPengeluaran.Select(x => x.SnapPengeluaran()).ToList();
+        }
+        private class Penjualan
         {
             private DateTime _dateTime;
             private double _nominal;
             
-            public Sales(DateTime date, double nominal)
+            public Penjualan(DateTime date, double nominal)
             {
                 this._dateTime = date;
                 this._nominal = nominal;
             }
+
             public double Nominal
             {
                 get
@@ -81,13 +87,13 @@ namespace dokuku.CashFlowHead
             }            
         }
 
-        public void AddSales(DateTime date, double nominal)
+        public void AddPenjualan(DateTime date, double nominal)
         {
-            var newSales = new Sales(date, nominal);
-            bool checktgl = _itemsSales.Where(x => x.Tanggal == date).Count() == 0 ? true : false;
+            var newSales = new Penjualan(date, nominal);
+            bool checktgl = _itemsPenjualan.Where(x => x.Tanggal == date).Count() == 0 ? true : false;
             
             if (checktgl)
-                this._itemsSales.Add(newSales);
+                this._itemsPenjualan.Add(newSales);
             else
                 throw new DateAlreadyExistException();
             Calculate();
@@ -95,15 +101,15 @@ namespace dokuku.CashFlowHead
 
         private double CalculateSales()
         {
-            return this._itemsSales.Sum(x => x.Nominal);
+            return this._itemsPenjualan.Sum(x => x.Nominal);
         }
 
         //mulain saleslain
-        public class SalesLain
+        public class PenjualanLain
         {
             private DateTime _dateTimeLain;
             private double _nominalLain;
-            public SalesLain(DateTime dateLain, double nominalLain)
+            public PenjualanLain(DateTime dateLain, double nominalLain)
             {
                 this._dateTimeLain = dateLain;
                 this._nominalLain = nominalLain;
@@ -124,13 +130,13 @@ namespace dokuku.CashFlowHead
             }
         }
 
-        public void AddSalesLain(DateTime dateLain, double nominalLain)
+        public void AddPenjualanLain(DateTime dateLain, double nominalLain)
         {
-            var newSalesLain = new SalesLain(dateLain, nominalLain);
-            bool checktgl = _itemsSalesLain.Where(x => x.TanggalLain == dateLain).Count() == 0 ? true : false;
+            var newSalesLain = new PenjualanLain(dateLain, nominalLain);
+            bool checktgl = _itemsPenjualanLain.Where(x => x.TanggalLain == dateLain).Count() == 0 ? true : false;
 
             if (checktgl)
-                this._itemsSalesLain.Add(newSalesLain);
+                this._itemsPenjualanLain.Add(newSalesLain);
             else
                 throw new DateAlreadyExistException();
             Calculate();
@@ -138,7 +144,7 @@ namespace dokuku.CashFlowHead
 
         private double CalculateSalesLain()
         {
-            return this._itemsSalesLain.Sum(x => x.NominalLain);
+            return this._itemsPenjualanLain.Sum(x => x.NominalLain);
         }
 
         //muali pengeluaran-----------
@@ -146,11 +152,22 @@ namespace dokuku.CashFlowHead
         {
             private string _akun;
             private double _nominal;
+            private int _jumlah;
 
-            public Pengeluaran(string akun, double nominal)
+            public Pengeluaran(string akun, double nominal, int jumlah)
             {
                 this._akun = akun;
                 this._nominal = nominal;
+                this._jumlah = jumlah;
+            }
+            public dokuku.Dto.NotaPengeluaranDto.ItemNotaDto SnapPengeluaran()
+            {
+                return new dokuku.Dto.NotaPengeluaranDto.ItemNotaDto()
+                {
+                    Akun = this._akun,
+                    Jumlah = this._jumlah,
+                    Nominal = this._nominal
+                };
             }
 
             public string Akun 
@@ -173,13 +190,13 @@ namespace dokuku.CashFlowHead
             }
         }
 
-        public void ChangePengeluaran(string akun, double nominal) 
+        public void ChangePengeluaran(string akun, double nominal, int jumlah) 
         {
             var pengeluaran = this._itemsPengeluaran.FirstOrDefault(x => x.Akun == akun);
 
             if (pengeluaran == null)
             {
-                this._itemsPengeluaran.Add(new Pengeluaran(akun,nominal));
+                this._itemsPengeluaran.Add(new Pengeluaran(akun,nominal, jumlah));
             }
             else
             {

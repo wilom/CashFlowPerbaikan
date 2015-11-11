@@ -59,7 +59,7 @@ namespace UnitTest
         [TestMethod]
         public void testTambahPenjualan()
         {            
-            _cashFlow.AddSales(new DateTime(2015, 10, 1), 200000);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 200000);
 
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
@@ -78,8 +78,8 @@ namespace UnitTest
         [TestMethod]
         public void testTambahPenjualanLagi() 
         {
-            _cashFlow.AddSales(new DateTime(2015, 10, 2), 200000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 3), 300000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 200000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 3), 300000.0);
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
             {
@@ -98,8 +98,8 @@ namespace UnitTest
         [ExpectedException(typeof(DateAlreadyExistException),"Tanggal sudah pernah diinput")]
         public void testHanyaBolehSatuSalesDalamSatuHari() 
         {
-            _cashFlow.AddSales(new DateTime(2015, 10, 4), 200000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 4), 200000.0); 
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 4), 200000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 4), 200000.0); 
             
         }
 
@@ -108,8 +108,8 @@ namespace UnitTest
         public void testTambahPenjualanLain()
         {
 
-            _cashFlow.AddSales(new DateTime(2015, 10, 1), 200000);
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 1), 200000);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 200000);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 1), 200000);
 
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
@@ -126,8 +126,8 @@ namespace UnitTest
         }
         public void testTambahPenjualanLainLagi()
         {
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 2), 200000.0);
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 3), 300000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 2), 200000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 3), 300000.0);
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
             {
@@ -146,20 +146,20 @@ namespace UnitTest
         [ExpectedException(typeof(DateAlreadyExistException), "Tanggal sudah pernah diinput")]
         public void testHanyaBolehSatuSalesLainDalamSatuHari()
         {
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 4), 200000.0);
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 4), 200000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 4), 200000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 4), 200000.0);
         }
 
         //mulai pengeluaran------------------------------------
         [TestMethod]
         public void testPengeluaranCashFlow() 
         {
-            _cashFlow.ChangePengeluaran("Ayam", 500000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 1), 200000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 2), 100000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 3), 300000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 4), 400000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 5), 200000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 500000.0, 2);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 200000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 100000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 3), 300000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 4), 400000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 5), 200000.0);
             var snapPengeluaran = _cashFlow.Snap();
             var expectedPengeluaran = new CashFlowDto()
             {
@@ -177,8 +177,8 @@ namespace UnitTest
         [TestMethod]
         public void testUbahPengeluaranJikaAccountSudahAda()
         {
-            _cashFlow.ChangePengeluaran("Ayam", 400000.0);
-            _cashFlow.ChangePengeluaran("Ayam", 600000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 400000.0,2);
+            _cashFlow.ChangePengeluaran("Ayam", 600000.0,3);
             var snapPengeluaran = _cashFlow.Snap();
             var expectedPengeluaran = new CashFlowDto()
             {
@@ -198,12 +198,12 @@ namespace UnitTest
         {
             PeriodeId periodid = new PeriodeId("2015101");
             _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 1), 1500000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 2), 2000000.0);
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 1), 1500000.0);
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 2), 2000000.0);
-            _cashFlow.ChangePengeluaran("Ayam", 1400000.0);
-            _cashFlow.ChangePengeluaran("Ayam", 2400000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 1500000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 2000000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 1), 1500000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 2), 2000000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 1400000.0,7);
+            _cashFlow.ChangePengeluaran("Ayam", 2400000.0,12);
             var snapPengeluaran = _cashFlow.Snap();
             var expectedPengeluaran = new CashFlowDto()
             {
@@ -223,12 +223,12 @@ namespace UnitTest
         {
             PeriodeId periodid = new PeriodeId("2015101");
             _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 1), 1500000.0);
-            _cashFlow.AddSales(new DateTime(2015, 10, 2), 2000000.0);
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 1), 1500000.0);
-            _cashFlow.AddSalesLain(new DateTime(2015, 10, 2), 2000000.0);
-            _cashFlow.ChangePengeluaran("Ayam", 1400000.0);
-            _cashFlow.ChangePengeluaran("Ayam", 2400000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 1500000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 2000000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 1), 1500000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 2), 2000000.0);
+            _cashFlow.ChangePengeluaran("Ayam", 1400000.0,1);
+            _cashFlow.ChangePengeluaran("Ayam", 2400000.0,1);
             var snapshot = new CashFlowDto()
             {
                 TenantId = "ABC",
@@ -242,6 +242,34 @@ namespace UnitTest
             var cashflow = new CashFlow(snapshot);
             var loadedSanpshot = cashflow.Snap();
             Assert.AreEqual(snapshot, loadedSanpshot);
+        }
+
+        [TestMethod]
+        public void testCashFlowItems()
+        {  
+            NotaPengeluaran notaPengeluaran = new NotaPengeluaran(new DateTime(2015, 10, 26), "123");
+            PeriodeId periodid = new PeriodeId("2015101");
+            _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 1500000.0);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 2000000.0);
+            notaPengeluaran.AddAkun("Ayam", 100000.0, 1);
+            var cashFlowSnapshot = _cashFlow.Snap();
+            var snapshot = new CashFlowDto()
+            {
+                TenantId = "ABC",
+                PeriodId = "2015101",
+                SaldoAwal = 1000000.0,
+                SaldoAkhir = 4400000.0,
+                TotalPenjualan = 3500000.0,
+                TotalPenjualanLain = 0.0,
+                TotalPengeluaran = 100000.0
+            };
+            Assert.AreEqual(snapshot, cashFlowSnapshot);
+            Assert.AreEqual(1, snapshot.Items.Count);
+            var itemDto=snapshot.Items[0];
+            Assert.AreEqual("Ayam",itemDto.Akun);
+            Assert.AreEqual(1, itemDto.Jumlah);
+            Assert.AreEqual(100000.0, itemDto.Nominal);
         }
     }
 

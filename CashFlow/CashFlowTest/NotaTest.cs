@@ -59,10 +59,10 @@ namespace UnitTest
 
         [TestMethod]
         public void testChangeNotaPengeluaran()
-        {
+        {            
             _notaPengeluaran.AddAkun("Ayam", 100000.0, 1);
             _notaPengeluaran.ChangeNotaPengeluaran("Ayam", 100000.0, 1);
-            _notaPengeluaran.ChangeNotaPengeluaran("Ayam", 200000.0, 1);
+            _notaPengeluaran.ChangeNotaPengeluaran("Ayam", 200000.0, 2);
             var notaPengeluaranSnapshot = _notaPengeluaran.Snap();
             var expected = new NotaPengeluaranDto()
             {
@@ -74,10 +74,10 @@ namespace UnitTest
             Assert.AreEqual(1, notaPengeluaranSnapshot.Items.Count);
             var entry1 = notaPengeluaranSnapshot.Items[0];
             Assert.AreEqual("Ayam", entry1.Akun);
-            Assert.AreEqual(1, entry1.Jumlah);
+            Assert.AreEqual(2, entry1.Jumlah);
             Assert.AreEqual(200000.0, entry1.Nominal);
         }
-
+        
         [TestMethod]
         public void testSecenarioNotaPengeluaran()
         {
