@@ -14,7 +14,7 @@ namespace dokuku.Dto
 
         public double TotalNota { get; set; }
 
-        public IList<ItemNotaDto> Items { get; set; }
+        public List<ItemNotaDto> Items { get; set; }
 
         public override bool Equals(object obj)
         {

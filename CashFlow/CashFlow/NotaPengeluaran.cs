@@ -13,7 +13,7 @@ namespace dokuku
         private DateTime _dateTime;
         private string _noNota;       
         private double _totalNota;
-        IList<AkunPengeluaran> _itemsAkun = new List<AkunPengeluaran>();
+        List<AkunPengeluaran> _itemsAkun = new List<AkunPengeluaran>();
 
         public NotaPengeluaran(DateTime dateTime, string noNota)
         {      
@@ -33,7 +33,7 @@ namespace dokuku
             };
         }
 
-        private IList<dokuku.Dto.NotaPengeluaranDto.ItemNotaDto>  SetToItems()
+        private List<dokuku.Dto.NotaPengeluaranDto.ItemNotaDto>  SetToItems()
         {
             return this._itemsAkun.Select(x => x.SnapAkun()).ToList();                      
         }

@@ -15,10 +15,9 @@ namespace dokuku.Dto
         public double TotalPenjualan { get; set; }
         public double TotalPenjualanLain { get; set; }
         public double TotalPengeluaran { get; set; }
-        public IList<PenjualanDto> ItemsPenjualan { get; set; }
-        public IList<PenjualanLainDto> ItemsPenjualanLain { get; set; }
-        public IList<PengeluaranDto> ItemsPengeluaran { get; set; }
-
+        public List<ItemsPenjualanDto> ItemsPenjualan { get; set; }
+        public List<ItemsPenjualanLainDto> ItemsPenjualanLain { get; set; }
+        public List<ItemsPengeluaranDto> ItemsPengeluaran { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -33,17 +32,17 @@ namespace dokuku.Dto
                 this.TotalPengeluaran.Equals(cmp.TotalPengeluaran);
         }
 
-        public class PenjualanDto
+        public class ItemsPenjualanDto
         {
             public DateTime DateTime { get; set; }
             public double Nominal { get; set; }
         }
-        public class PenjualanLainDto
+        public class ItemsPenjualanLainDto
         {
             public DateTime DateTimeLain { get; set; }
             public double NominalLain { get; set; }
         }
-        public class PengeluaranDto
+        public class ItemsPengeluaranDto
         {
             public string Akun { get; set; }
             public double Nominal { get; set; }

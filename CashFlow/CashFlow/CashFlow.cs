@@ -18,9 +18,9 @@ namespace dokuku.CashFlowHead
         private double _totalPenjualan;
         private double _totalPenjualanLain;
         private double _totalPengeluaran;
-        IList<Penjualan> _itemsPenjualan = new List<Penjualan>();
-        IList<PenjualanLain> _itemsPenjualanLain = new List<PenjualanLain>();
-        IList<Pengeluaran> _itemsPengeluaran = new List<Pengeluaran>();
+        List<Penjualan> _itemsPenjualan = new List<Penjualan>();
+        List<PenjualanLain> _itemsPenjualanLain = new List<PenjualanLain>();
+        List<Pengeluaran> _itemsPengeluaran = new List<Pengeluaran>();
         
         
         public CashFlow(string tenanId, PeriodeId periodId, double saldoAwal) 
@@ -28,19 +28,38 @@ namespace dokuku.CashFlowHead
             this._tenanId = tenanId;
             this._periodId = periodId;
             this._saldoAwal = saldoAwal;
-            Calculate();            
+            Calculate();                        
         }
 
         public CashFlow(CashFlowDto snapshot)
-        {                      
+        {        
+           
            this._tenanId=snapshot.TenantId;
            this._periodId= new PeriodeId (snapshot.PeriodId) ;
            this._saldoAwal = snapshot.SaldoAwal;
            this._saldoAkhir = snapshot.SaldoAkhir;
            this._totalPenjualan = snapshot.TotalPenjualan;
            this._totalPenjualanLain = snapshot.TotalPenjualanLain;
-           this._totalPengeluaran = snapshot.TotalPengeluaran;      
+           this._totalPengeluaran = snapshot.TotalPengeluaran;
+           this._itemsPenjualan = ConvertToItemsPenjualan(snapshot.ItemsPenjualan);
+           this._itemsPenjualanLain = ConvertToItemsPenjualanLain(snapshot.ItemsPenjualanLain);
+           this._itemsPengeluaran = ConvertToItemsPengeluaran(snapshot.ItemsPengeluaran);
         }
+        //konvert method
+
+        public List<Penjualan> ConvertToItemsPenjualan(List<CashFlowDto.ItemsPenjualanDto> itemsPenjualanDto)
+        {
+            return itemsPenjualanDto.Select(x => new Penjualan(x.DateTime, x.Nominal)).ToList();
+        }
+        public List<PenjualanLain> ConvertToItemsPenjualanLain(List<CashFlowDto.ItemsPenjualanLainDto> itemsPenjualanLainDto)
+        {
+            return itemsPenjualanLainDto.Select(y => new PenjualanLain(y.DateTimeLain, y.NominalLain)).ToList();
+        }
+        public List<Pengeluaran> ConvertToItemsPengeluaran(List<CashFlowDto.ItemsPengeluaranDto> itemsPengeluaranDto)
+        {
+            return itemsPengeluaranDto.Select(z => new Pengeluaran(z.Akun, z.Nominal, z.Jumlah)).ToList();
+        }
+        //end konvert method
        
         public Dto.CashFlowDto Snap()
         {
@@ -54,16 +73,21 @@ namespace dokuku.CashFlowHead
                 TotalPenjualanLain = this._totalPenjualanLain,
                 TotalPengeluaran = this._totalPengeluaran,
                 ItemsPenjualan = SetToItemsPenjualan(),
-                ItemsPenjualanLain = SetToItemsPenjualanLain()
+                ItemsPenjualanLain = SetToItemsPenjualanLain(),
+                ItemsPengeluaran = SetToItemsPengeluaran()
             };
         }
-        private IList<dokuku.Dto.CashFlowDto.PenjualanDto> SetToItemsPenjualan()
+        private List<dokuku.Dto.CashFlowDto.ItemsPenjualanDto> SetToItemsPenjualan()
         {
             return this._itemsPenjualan.Select(x => x.SnapPenjualan()).ToList();
         }
-        private IList<dokuku.Dto.CashFlowDto.PenjualanLainDto> SetToItemsPenjualanLain()
+        private List<dokuku.Dto.CashFlowDto.ItemsPenjualanLainDto> SetToItemsPenjualanLain()
         {
             return this._itemsPenjualanLain.Select(x => x.SnapPenjualanLain()).ToList();
+        }
+        private List<dokuku.Dto.CashFlowDto.ItemsPengeluaranDto> SetToItemsPengeluaran()
+        {
+            return this._itemsPengeluaran.Select(x => x.SnapPengeluaran()).ToList();
         }
         private class Penjualan
         {
@@ -75,9 +99,9 @@ namespace dokuku.CashFlowHead
                 this._dateTime = date;
                 this._nominal = nominal;
             }
-            public dokuku.Dto.CashFlowDto.PenjualanDto SnapPenjualan()
+            public dokuku.Dto.CashFlowDto.ItemsPenjualanDto SnapPenjualan()
             {
-                return new dokuku.Dto.CashFlowDto.PenjualanDto()
+                return new dokuku.Dto.CashFlowDto.ItemsPenjualanDto()
                 {
                     DateTime = this._dateTime,                    
                     Nominal = this._nominal
@@ -102,11 +126,15 @@ namespace dokuku.CashFlowHead
         public void AddPenjualan(DateTime date, double nominal)
         {
             var newSales = new Penjualan(date, nominal);
-            bool checktgl = _itemsPenjualan.Where(x => x.Tanggal == date).Count() == 0 ? true : false;            
+            bool checktgl = _itemsPenjualan.Where(x => x.Tanggal == date).Count() == 0 ? true : false;
             if (checktgl)
+            {
                 this._itemsPenjualan.Add(newSales);
+            }
             else
+            {
                 throw new DateAlreadyExistException();
+            }
             Calculate();
         }      
 
@@ -125,9 +153,9 @@ namespace dokuku.CashFlowHead
                 this._dateTimeLain = dateLain;
                 this._nominalLain = nominalLain;
             }
-            public dokuku.Dto.CashFlowDto.PenjualanLainDto SnapPenjualanLain()
+            public dokuku.Dto.CashFlowDto.ItemsPenjualanLainDto SnapPenjualanLain()
             {
-                return new dokuku.Dto.CashFlowDto.PenjualanLainDto()
+                return new dokuku.Dto.CashFlowDto.ItemsPenjualanLainDto()
                 {
                     DateTimeLain = this._dateTimeLain,
                     NominalLain = this._nominalLain
@@ -178,8 +206,16 @@ namespace dokuku.CashFlowHead
                 this._akun = akun;
                 this._nominal = nominal;
                 this._jumlah = jumlah;
-            }           
-
+            }
+            public dokuku.Dto.CashFlowDto.ItemsPengeluaranDto SnapPengeluaran()
+            {
+                return new dokuku.Dto.CashFlowDto.ItemsPengeluaranDto()
+                {
+                    Akun = this._akun,
+                    Nominal = this._nominal,
+                    Jumlah = this._jumlah
+                };
+            }
             public string Akun 
             {
                 get

@@ -216,8 +216,9 @@ namespace UnitTest
                 TotalPengeluaran = 2400000.0
             };
             Assert.AreEqual(expectedPengeluaran, snapPengeluaran);
-        }    
+        }
 
+        // mulai intance item penjualan,penjualanLain dan pengeluaran 
         [TestMethod]
         public void testMenginstanceDariSnapshot()
         {
@@ -229,6 +230,7 @@ namespace UnitTest
             _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 2), 2000000.0);
             _cashFlow.ChangePengeluaran("Ayam", 1400000.0,1);
             _cashFlow.ChangePengeluaran("Ayam", 2400000.0,1);
+            var cashFlowSnapshot = _cashFlow.Snap();
             var snapshot = new CashFlowDto()
             {
                 TenantId = "ABC",
@@ -242,8 +244,14 @@ namespace UnitTest
             var cashflow = new CashFlow(snapshot);
             var loadedSanpshot = cashflow.Snap();
             Assert.AreEqual(snapshot, loadedSanpshot);
-        }
 
+            Assert.AreEqual(snapshot, cashFlowSnapshot);
+            Assert.AreEqual(2, cashFlowSnapshot.ItemsPenjualan.Count);
+            var itemPenjualanDto = cashFlowSnapshot.ItemsPenjualan[0];
+            Assert.AreEqual(new DateTime(2015, 10, 1), itemPenjualanDto.DateTime);
+            Assert.AreEqual(1500000.0, itemPenjualanDto.Nominal);
+        }
+       
         [TestMethod]
         public void testCashFlowItemsPenjualan()
         {              
@@ -292,6 +300,7 @@ namespace UnitTest
             Assert.AreEqual(1500000.0, itemPenjualanLainDto.NominalLain);
         }
 
+        [TestMethod]
         public void testCashFlowItemsPengeluaran()
         {
             PeriodeId periodid = new PeriodeId("2015101");
@@ -313,7 +322,7 @@ namespace UnitTest
             var itemPengeluaranDto = cashFlowSnapshot.ItemsPengeluaran[0];
             Assert.AreEqual("Ayam", itemPengeluaranDto.Akun);
             Assert.AreEqual(150000.0, itemPengeluaranDto.Nominal);
-            Assert.AreEqual(5, itemPengeluaranDto.Jumlah);
+            Assert.AreEqual(7, itemPengeluaranDto.Jumlah);
         }
     }
 
