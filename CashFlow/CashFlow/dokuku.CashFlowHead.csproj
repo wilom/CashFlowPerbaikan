@@ -41,9 +41,6 @@
   <ItemGroup>
     <Compile Include="CashFlow.cs" />
     <Compile Include="Dto\NotaPengeluaranDto.cs" />
-    <Compile Include="Dto\PengeluaranDto.cs" />
-    <Compile Include="Dto\PenjualanDto.cs" />
-    <Compile Include="Dto\PenjualanLainDto.cs" />
     <Compile Include="Dto\SummaryAkunDto.cs" />
     <Compile Include="exceptions\AcountAllreadyExistException.cs" />
     <Compile Include="exceptions\CashflowNotFoundException.cs" />

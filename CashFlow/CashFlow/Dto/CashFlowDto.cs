@@ -31,6 +31,23 @@ namespace dokuku.Dto
                 this.TotalPenjualan.Equals(cmp.TotalPenjualan) &&
                 this.TotalPenjualanLain.Equals(cmp.TotalPenjualanLain) &&
                 this.TotalPengeluaran.Equals(cmp.TotalPengeluaran);
-        }        
+        }
+
+        public class PenjualanDto
+        {
+            public DateTime DateTime { get; set; }
+            public double Nominal { get; set; }
+        }
+        public class PenjualanLainDto
+        {
+            public DateTime DateTimeLain { get; set; }
+            public double NominalLain { get; set; }
+        }
+        public class PengeluaranDto
+        {
+            public string Akun { get; set; }
+            public double Nominal { get; set; }
+            public int Jumlah { get; set; }
+        }
     }
 }

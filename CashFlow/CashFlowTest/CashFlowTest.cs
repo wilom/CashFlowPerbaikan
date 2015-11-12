@@ -245,30 +245,75 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void testCashFlowItems()
-        {  
-            NotaPengeluaran notaPengeluaran = new NotaPengeluaran(new DateTime(2015, 10, 26), "123");
+        public void testCashFlowItemsPenjualan()
+        {              
             PeriodeId periodid = new PeriodeId("2015101");
             _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
-            _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 1500000.0);
-            _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 2000000.0);
-            notaPengeluaran.AddAkun("Ayam", 100000.0, 1);
+            _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 1500000.0);         
             var cashFlowSnapshot = _cashFlow.Snap();
-            var snapshot = new CashFlowDto()
+            var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
                 PeriodId = "2015101",
                 SaldoAwal = 1000000.0,
-                SaldoAkhir = 4400000.0,
-                TotalPenjualan = 3500000.0,
+                SaldoAkhir = 2500000.0,
+                TotalPenjualan = 1500000.0,
                 TotalPenjualanLain = 0.0,
-                TotalPengeluaran = 100000.0
+                TotalPengeluaran = 0.0
             };
-            Assert.AreEqual(snapshot, cashFlowSnapshot);
-            Assert.AreEqual(1, snapshot.ItemsPenjualan.Count);
-            var itemDto=snapshot.ItemsPenjualan[0];
-            Assert.AreEqual(new DateTime (2015,10,1),itemDto.DateTime);            
-            Assert.AreEqual(100000.0, itemDto.Nominal);
+            Assert.AreEqual(expected, cashFlowSnapshot);
+            Assert.AreEqual(1, cashFlowSnapshot.ItemsPenjualan.Count);
+            var itemPenjualanDto= cashFlowSnapshot.ItemsPenjualan[0];
+            Assert.AreEqual(new DateTime (2015,10,1),itemPenjualanDto.DateTime);            
+            Assert.AreEqual(1500000.0, itemPenjualanDto.Nominal);
+        }
+
+        [TestMethod]
+        public void testCashFlowItemsPenjualanLain()
+        {
+            PeriodeId periodid = new PeriodeId("2015101");
+            _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
+            _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 1), 1500000.0);
+            var cashFlowSnapshot = _cashFlow.Snap();
+            var expected = new CashFlowDto()
+            {
+                TenantId = "ABC",
+                PeriodId = "2015101",
+                SaldoAwal = 1000000.0,
+                SaldoAkhir = 2500000.0,
+                TotalPenjualan = 0.0,
+                TotalPenjualanLain = 1500000.0,
+                TotalPengeluaran = 0.0
+            };
+            Assert.AreEqual(expected, cashFlowSnapshot);
+            Assert.AreEqual(1, cashFlowSnapshot.ItemsPenjualanLain.Count);
+            var itemPenjualanLainDto = cashFlowSnapshot.ItemsPenjualanLain[0];
+            Assert.AreEqual(new DateTime(2015, 10, 1), itemPenjualanLainDto.DateTimeLain);
+            Assert.AreEqual(1500000.0, itemPenjualanLainDto.NominalLain);
+        }
+
+        public void testCashFlowItemsPengeluaran()
+        {
+            PeriodeId periodid = new PeriodeId("2015101");
+            _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
+            _cashFlow.ChangePengeluaran("Ayam",150000.0,7);
+            var cashFlowSnapshot = _cashFlow.Snap();
+            var expected = new CashFlowDto()
+            {
+                TenantId = "ABC",
+                PeriodId = "2015101",
+                SaldoAwal = 1000000.0,
+                SaldoAkhir = 850000.0,
+                TotalPenjualan = 0.0,
+                TotalPenjualanLain = 0.0,
+                TotalPengeluaran = 150000.0
+            };
+            Assert.AreEqual(expected, cashFlowSnapshot);
+            Assert.AreEqual(1, cashFlowSnapshot.ItemsPengeluaran.Count);
+            var itemPengeluaranDto = cashFlowSnapshot.ItemsPengeluaran[0];
+            Assert.AreEqual("Ayam", itemPengeluaranDto.Akun);
+            Assert.AreEqual(150000.0, itemPengeluaranDto.Nominal);
+            Assert.AreEqual(5, itemPengeluaranDto.Jumlah);
         }
     }
 

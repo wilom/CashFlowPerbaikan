@@ -53,14 +53,18 @@ namespace dokuku.CashFlowHead
                 TotalPenjualan = this._totalPenjualan,
                 TotalPenjualanLain = this._totalPenjualanLain,
                 TotalPengeluaran = this._totalPengeluaran,
-                ItemsPenjualan = SetToItemsPenjualan()
+                ItemsPenjualan = SetToItemsPenjualan(),
+                ItemsPenjualanLain = SetToItemsPenjualanLain()
             };
         }
-        private IList<dokuku.Dto.PenjualanDto> SetToItemsPenjualan()
+        private IList<dokuku.Dto.CashFlowDto.PenjualanDto> SetToItemsPenjualan()
         {
             return this._itemsPenjualan.Select(x => x.SnapPenjualan()).ToList();
         }
-       
+        private IList<dokuku.Dto.CashFlowDto.PenjualanLainDto> SetToItemsPenjualanLain()
+        {
+            return this._itemsPenjualanLain.Select(x => x.SnapPenjualanLain()).ToList();
+        }
         private class Penjualan
         {
             private DateTime _dateTime;
@@ -71,12 +75,11 @@ namespace dokuku.CashFlowHead
                 this._dateTime = date;
                 this._nominal = nominal;
             }
-            public dokuku.Dto.PenjualanDto SnapPenjualan()
+            public dokuku.Dto.CashFlowDto.PenjualanDto SnapPenjualan()
             {
-                return new dokuku.Dto.PenjualanDto()
+                return new dokuku.Dto.CashFlowDto.PenjualanDto()
                 {
-                    DateTime = this._dateTime,
-                    
+                    DateTime = this._dateTime,                    
                     Nominal = this._nominal
                 };
             }
@@ -99,8 +102,7 @@ namespace dokuku.CashFlowHead
         public void AddPenjualan(DateTime date, double nominal)
         {
             var newSales = new Penjualan(date, nominal);
-            bool checktgl = _itemsPenjualan.Where(x => x.Tanggal == date).Count() == 0 ? true : false;
-            
+            bool checktgl = _itemsPenjualan.Where(x => x.Tanggal == date).Count() == 0 ? true : false;            
             if (checktgl)
                 this._itemsPenjualan.Add(newSales);
             else
@@ -108,7 +110,7 @@ namespace dokuku.CashFlowHead
             Calculate();
         }      
 
-        private double CalculateSales()
+        private double CalculatePenjualan()
         {
             return this._itemsPenjualan.Sum(x => x.Nominal);
         }
@@ -122,6 +124,14 @@ namespace dokuku.CashFlowHead
             {
                 this._dateTimeLain = dateLain;
                 this._nominalLain = nominalLain;
+            }
+            public dokuku.Dto.CashFlowDto.PenjualanLainDto SnapPenjualanLain()
+            {
+                return new dokuku.Dto.CashFlowDto.PenjualanLainDto()
+                {
+                    DateTimeLain = this._dateTimeLain,
+                    NominalLain = this._nominalLain
+                };
             }
             public double NominalLain
             {
@@ -151,7 +161,7 @@ namespace dokuku.CashFlowHead
             Calculate();
         }
 
-        private double CalculateSalesLain()
+        private double CalculatePenjualanLain()
         {
             return this._itemsPenjualanLain.Sum(x => x.NominalLain);
         }
@@ -212,9 +222,9 @@ namespace dokuku.CashFlowHead
 
         private void Calculate()
         {
-            this._totalPenjualan = CalculateSales();
+            this._totalPenjualan = CalculatePenjualan();
 
-            this._totalPenjualanLain = CalculateSalesLain();
+            this._totalPenjualanLain = CalculatePenjualanLain();
 
             this._totalPengeluaran = CalculatePengeluaran();
 
