@@ -265,10 +265,9 @@ namespace UnitTest
                 TotalPengeluaran = 100000.0
             };
             Assert.AreEqual(snapshot, cashFlowSnapshot);
-            Assert.AreEqual(1, snapshot.Items.Count);
-            var itemDto=snapshot.Items[0];
-            Assert.AreEqual("Ayam",itemDto.Akun);
-            Assert.AreEqual(1, itemDto.Jumlah);
+            Assert.AreEqual(1, snapshot.ItemsPenjualan.Count);
+            var itemDto=snapshot.ItemsPenjualan[0];
+            Assert.AreEqual(new DateTime (2015,10,1),itemDto.DateTime);            
             Assert.AreEqual(100000.0, itemDto.Nominal);
         }
     }

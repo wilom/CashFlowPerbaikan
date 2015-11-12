@@ -9,20 +9,16 @@ namespace dokuku.Dto
     public class CashFlowDto
     {
         public string TenantId { get; set; }
-
         public string PeriodId { get; set; }
-
         public double SaldoAwal { get; set; }
-
         public double SaldoAkhir { get; set; }
-
         public double TotalPenjualan { get; set; }
-
         public double TotalPenjualanLain { get; set; }
-
         public double TotalPengeluaran { get; set; }
+        public IList<PenjualanDto> ItemsPenjualan { get; set; }
+        public IList<PenjualanLainDto> ItemsPenjualanLain { get; set; }
+        public IList<PengeluaranDto> ItemsPengeluaran { get; set; }
 
-        public IList<NotaPengeluaranDto.ItemNotaDto> Items { get; set; }
 
         public override bool Equals(object obj)
         {

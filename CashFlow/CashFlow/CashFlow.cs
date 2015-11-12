@@ -52,14 +52,10 @@ namespace dokuku.CashFlowHead
                 SaldoAkhir = this._saldoAkhir,
                 TotalPenjualan = this._totalPenjualan,
                 TotalPenjualanLain = this._totalPenjualanLain,
-                TotalPengeluaran = this._totalPengeluaran,
-                Items = SetToItems()
+                TotalPengeluaran = this._totalPengeluaran,               
             };
         }
-        private IList<dokuku.Dto.NotaPengeluaranDto.ItemNotaDto> SetToItems()
-        {
-            return this._itemsPengeluaran.Select(x => x.SnapPengeluaran()).ToList();
-        }
+       
         private class Penjualan
         {
             private DateTime _dateTime;
@@ -159,16 +155,7 @@ namespace dokuku.CashFlowHead
                 this._akun = akun;
                 this._nominal = nominal;
                 this._jumlah = jumlah;
-            }
-            public dokuku.Dto.NotaPengeluaranDto.ItemNotaDto SnapPengeluaran()
-            {
-                return new dokuku.Dto.NotaPengeluaranDto.ItemNotaDto()
-                {
-                    Akun = this._akun,
-                    Jumlah = this._jumlah,
-                    Nominal = this._nominal
-                };
-            }
+            }           
 
             public string Akun 
             {
