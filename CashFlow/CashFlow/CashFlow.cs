@@ -230,9 +230,13 @@ namespace dokuku.CashFlowHead
                     return this._nominal;
                 }
             }
-            public void Change(double nominal) 
+            public void ChangeNominal(double nominal) 
             {
                 this._nominal = nominal;
+            }
+            public void ChangeJumlah(int jumlah)
+            {
+                this._jumlah = jumlah;
             }
         }
 
@@ -246,7 +250,8 @@ namespace dokuku.CashFlowHead
             }
             else
             {
-                pengeluaran.Change(nominal);
+                pengeluaran.ChangeNominal(nominal);
+                pengeluaran.ChangeJumlah(jumlah);
             }            
             Calculate();  
         }

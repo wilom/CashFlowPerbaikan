@@ -228,8 +228,8 @@ namespace UnitTest
             _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 2000000.0);
             _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 1), 1500000.0);
             _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 2), 2000000.0);
-            _cashFlow.ChangePengeluaran("Ayam", 1400000.0,1);
-            _cashFlow.ChangePengeluaran("Ayam", 2400000.0,1);
+            _cashFlow.ChangePengeluaran("Ayam", 1400000.0,7);
+            _cashFlow.ChangePengeluaran("Ayam", 2400000.0,14);
             var cashFlowSnapshot = _cashFlow.Snap();
             var snapshot = new CashFlowDto()
             {
@@ -249,10 +249,29 @@ namespace UnitTest
             Assert.AreEqual(snapshot, loadedSanpshot);
 
             Assert.AreEqual(snapshot, cashFlowSnapshot);
+
             Assert.AreEqual(2, cashFlowSnapshot.ItemsPenjualan.Count);
-            var itemPenjualanDto = cashFlowSnapshot.ItemsPenjualan[0];
-            Assert.AreEqual(new DateTime(2015, 10, 1), itemPenjualanDto.DateTime);
-            Assert.AreEqual(1500000.0, itemPenjualanDto.Nominal);
+            var in1ItemPenjualanDto = cashFlowSnapshot.ItemsPenjualan[0];
+            var in2ItemPenjualanDto = cashFlowSnapshot.ItemsPenjualan[1];
+            Assert.AreEqual(new DateTime(2015, 10, 1), in1ItemPenjualanDto.DateTime);
+            Assert.AreEqual(1500000.0, in1ItemPenjualanDto.Nominal);
+            Assert.AreEqual(new DateTime(2015, 10, 2), in2ItemPenjualanDto.DateTime);
+            Assert.AreEqual(2000000.0, in2ItemPenjualanDto.Nominal);
+
+            Assert.AreEqual(2, cashFlowSnapshot.ItemsPenjualanLain.Count);
+            var in1ItemPenjualanLainDto = cashFlowSnapshot.ItemsPenjualanLain[0];
+            var in2ItemPenjualanLainDto = cashFlowSnapshot.ItemsPenjualanLain[1];            
+            Assert.AreEqual(new DateTime(2015, 10, 1), in1ItemPenjualanLainDto.DateTimeLain);
+            Assert.AreEqual(1500000.0, in1ItemPenjualanLainDto.NominalLain);
+            Assert.AreEqual(new DateTime(2015, 10, 2), in2ItemPenjualanLainDto.DateTimeLain);
+            Assert.AreEqual(2000000.0, in2ItemPenjualanLainDto.NominalLain);
+
+            Assert.AreEqual(1, cashFlowSnapshot.ItemsPengeluaran.Count);
+            var in1ItemPengeluaranDto = cashFlowSnapshot.ItemsPengeluaran[0];
+            Assert.AreEqual("Ayam", in1ItemPengeluaranDto.Akun);
+            Assert.AreEqual(2400000.0, in1ItemPengeluaranDto.Nominal);
+            Assert.AreEqual(14, in1ItemPengeluaranDto.Jumlah);
+           
         }
        
         [TestMethod]
