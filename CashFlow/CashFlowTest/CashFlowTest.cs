@@ -239,7 +239,10 @@ namespace UnitTest
                 SaldoAkhir = 5600000.0,
                 TotalPenjualan = 3500000.0,
                 TotalPenjualanLain = 3500000.0,
-                TotalPengeluaran = 2400000.0
+                TotalPengeluaran = 2400000.0,
+                ItemsPenjualan = new List<CashFlowDto.ItemsPenjualanDto>(),
+                ItemsPenjualanLain = new List<CashFlowDto.ItemsPenjualanLainDto>(),
+                ItemsPengeluaran = new List<CashFlowDto.ItemsPengeluaranDto>()
             };
             var cashflow = new CashFlow(snapshot);
             var loadedSanpshot = cashflow.Snap();
@@ -315,7 +318,7 @@ namespace UnitTest
                 SaldoAkhir = 850000.0,
                 TotalPenjualan = 0.0,
                 TotalPenjualanLain = 0.0,
-                TotalPengeluaran = 150000.0
+                TotalPengeluaran = 150000.0,               
             };
             Assert.AreEqual(expected, cashFlowSnapshot);
             Assert.AreEqual(1, cashFlowSnapshot.ItemsPengeluaran.Count);

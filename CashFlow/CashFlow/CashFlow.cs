@@ -89,7 +89,7 @@ namespace dokuku.CashFlowHead
         {
             return this._itemsPengeluaran.Select(x => x.SnapPengeluaran()).ToList();
         }
-        private class Penjualan
+        public class Penjualan
         {
             private DateTime _dateTime;
             private double _nominal;
@@ -195,7 +195,7 @@ namespace dokuku.CashFlowHead
         }
 
         //muali pengeluaran-----------
-        private class Pengeluaran 
+        public class Pengeluaran 
         {
             private string _akun;
             private double _nominal;
