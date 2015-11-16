@@ -332,7 +332,6 @@ namespace UnitTest
             Assert.AreEqual("Ayam", itemPengeluaranDto.Akun);
             Assert.AreEqual(150000.0, itemPengeluaranDto.Nominal);
             Assert.AreEqual(7, itemPengeluaranDto.Jumlah);
-        }
+        }        
     }
-
 }
