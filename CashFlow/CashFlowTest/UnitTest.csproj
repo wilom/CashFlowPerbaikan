@@ -59,7 +59,7 @@
     <Compile Include="CashFlowTest.cs" />
     <Compile Include="ProsessTest.cs" />
     <Compile Include="NotaTest.cs" />
-    <Compile Include="FindAndSaveCashFlow.cs" />
+    <Compile Include="FindAndSaveCashFlowTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CashFlow\dokuku.CashFlowHead.csproj">

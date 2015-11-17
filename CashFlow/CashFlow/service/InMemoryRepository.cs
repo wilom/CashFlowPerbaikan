@@ -9,9 +9,29 @@ namespace dokuku.service
 {
     public class InMemoryRepository : IRepository
     {
-        public void Save(global::Moq.Mock<CashFlowHead.CashFlow> cashFlowCreate)
+        private Dictionary<CashFlowId, ICashFlow> _cashFlowDb = new Dictionary<CashFlowId, ICashFlow>();
+        public IPeriod FindPeriodForDate(DateTime date)
         {
             throw new NotImplementedException();
-        }       
+        }
+
+        public ICashFlow FindCashFlowByPeriod(string periodId)
+        {
+            var key = new CashFlowId(periodId);
+            return this._cashFlowDb[key];
+
+        }
+        public IList<Dto.SummaryAkunDto> ListSummaryAkunIn(IPeriod period, string[] listAkun)
+        {
+            throw new NotImplementedException();
+           
+        }
+        public void Save(ICashFlow cashFlow)
+        {
+            //throw new NotImplementedException();
+            _cashFlowDb.Add(cashFlow.GenerateId(), cashFlow);          
+
+        }
+              
     }
 }

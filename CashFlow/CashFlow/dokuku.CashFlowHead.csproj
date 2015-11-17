@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CashFlow.cs" />
+    <Compile Include="CashFlowId.cs" />
     <Compile Include="Dto\NotaPengeluaranDto.cs" />
     <Compile Include="Dto\SummaryAkunDto.cs" />
     <Compile Include="exceptions\AcountAllreadyExistException.cs" />

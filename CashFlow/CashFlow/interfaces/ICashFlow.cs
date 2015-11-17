@@ -1,4 +1,5 @@
-﻿using dokuku.exceptions;
+﻿using dokuku.Dto;
+using dokuku.exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,9 @@ namespace dokuku.interfaces
     public interface ICashFlow
     {
         void ChangePengeluaran(string akun, double nominal);
+
+        CashFlowDto Snap();
+
+        CashFlowId GenerateId();
     }
 }
