@@ -1,4 +1,5 @@
-﻿using dokuku.interfaces;
+﻿using dokuku.exceptions;
+using dokuku.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,9 @@ namespace dokuku.service
         }
 
         public ICashFlow FindCashFlowByPeriod(string periodId)
-        {
-            var key = new CashFlowId(periodId);
-            return this._cashFlowDb[key];
-
+        {            
+                var key = new CashFlowId(periodId);
+                return this._cashFlowDb[key];          
         }
         public IList<Dto.SummaryAkunDto> ListSummaryAkunIn(IPeriod period, string[] listAkun)
         {
@@ -27,10 +27,8 @@ namespace dokuku.service
            
         }
         public void Save(ICashFlow cashFlow)
-        {
-            //throw new NotImplementedException();
-            _cashFlowDb.Add(cashFlow.GenerateId(), cashFlow);          
-
+        {                
+                _cashFlowDb.Add(cashFlow.GenerateId(), cashFlow);          
         }
               
     }
