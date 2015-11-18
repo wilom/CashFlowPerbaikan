@@ -15,7 +15,7 @@ namespace UnitTest
         [TestMethod]
         public void testSaveAndFindPeriode()
         {
-            string periodeId = "2015101";
+            var periodeId = new DateTime(2015,10,1);
             var periodeSnapShot = new PeriodeDto()
             {
                 PeriodeId = "2015101",
@@ -27,10 +27,10 @@ namespace UnitTest
             
             var periodeCrearte = factory.Create<IPeriod>();
             periodeCrearte.Setup(x => x.Snap()).Returns(periodeSnapShot);
-            periodeCrearte.Setup(x => x.GenerateId()).Returns(new PeriodeId(periodeId));
+            periodeCrearte.Setup(x => x.GenerateId()).Returns(new PeriodeId(periodeId.ToString()));
 
             repo.SavePeriod(periodeCrearte.Object);
-            var periode = repo.FindCashFlowByPeriod(periodeId);
+            var periode = repo.FindPeriodForDate(periodeId);
             
             Assert.AreEqual(periodeSnapShot, periode.Snap());
         }

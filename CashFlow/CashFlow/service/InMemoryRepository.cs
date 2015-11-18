@@ -14,8 +14,8 @@ namespace dokuku.service
         private Dictionary<PeriodeId, IPeriod> _periodeDb = new Dictionary<PeriodeId, IPeriod>();
         public IPeriod FindPeriodForDate(DateTime date)
         {
-            //var key = new PeriodeId(date);
-            //return this._periodeDb[key];  
+            var key = new PeriodeId(date.ToString());
+            return this._periodeDb[key];  
         }
 
         public ICashFlow FindCashFlowByPeriod(string periodId)
