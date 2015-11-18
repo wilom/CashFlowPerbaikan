@@ -8,14 +8,24 @@ namespace dokuku
 {
     public class PeriodeId
     {
-        private string _id;
-        public PeriodeId(string id)
+        private string _periodeId;
+        public PeriodeId(string periodeid)
         {
-            this._id = id;
+            this._periodeId = periodeid;
         }
         public override string ToString()
         {
-            return this._id;
+            return this._periodeId;
+        }
+        public override bool Equals(object obj)
+        {
+            if (!(obj is PeriodeId)) return false;
+            var cmp = (PeriodeId)obj;
+            return this._periodeId.Equals(cmp._periodeId);
+        }
+        public override int GetHashCode()
+        {
+            return this._periodeId.GetHashCode();
         }
 
     }

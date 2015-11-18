@@ -11,9 +11,11 @@ namespace dokuku.service
     public class InMemoryRepository : IRepository
     {
         private Dictionary<CashFlowId, ICashFlow> _cashFlowDb = new Dictionary<CashFlowId, ICashFlow>();
+        private Dictionary<PeriodeId, IPeriod> _periodeDb = new Dictionary<PeriodeId, IPeriod>();
         public IPeriod FindPeriodForDate(DateTime date)
         {
-            throw new NotImplementedException();
+            //var key = new PeriodeId(date);
+            //return this._periodeDb[key];  
         }
 
         public ICashFlow FindCashFlowByPeriod(string periodId)
@@ -27,9 +29,18 @@ namespace dokuku.service
            
         }
         public void Save(ICashFlow cashFlow)
-        {                
-                _cashFlowDb.Add(cashFlow.GenerateId(), cashFlow);          
+        {
+            if (!this._cashFlowDb.ContainsKey(cashFlow.GenerateId()))
+                this._cashFlowDb.Add(cashFlow.GenerateId(), cashFlow);
+            this._cashFlowDb[cashFlow.GenerateId()] = cashFlow; 
         }
-              
+
+
+        public void SavePeriod(IPeriod period)
+        {
+            if (!this._periodeDb.ContainsKey(period.GenerateId()))
+                this._periodeDb.Add(period.GenerateId(), period);
+            this._periodeDb[period.GenerateId()] = period; 
+        }
     }
 }

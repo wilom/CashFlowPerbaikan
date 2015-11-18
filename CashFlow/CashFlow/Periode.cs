@@ -22,7 +22,7 @@ namespace dokuku
         {
             return new Dto.PeriodeDto() 
             { 
-                Id = this._periodid.ToString(),
+                PeriodeId = this._periodid.ToString(),
                 IsPeriode = this._statusPeriode
             };
         }

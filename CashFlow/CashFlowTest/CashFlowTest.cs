@@ -49,7 +49,7 @@ namespace UnitTest
             var periodeSnapShot = _periode.Snap();
             var expected = new PeriodeDto()
             {
-                Id = "2015101",
+                PeriodeId = "2015101",
                 IsPeriode = StatusPeriode.Mingguan
             };
             Assert.AreEqual(expected, periodeSnapShot);

@@ -8,7 +8,7 @@ namespace dokuku.Dto
 {
     public class PeriodeDto
     {
-        public string Id { get; set; }
+        public string PeriodeId { get; set; }
 
         public ex.StatusPeriode IsPeriode { get; set; }
 
@@ -16,7 +16,7 @@ namespace dokuku.Dto
         {
             if (!(obj is PeriodeDto)) return false;
             var cmp = (PeriodeDto)obj;
-            return this.Id.Equals(cmp.Id) &&
+            return this.PeriodeId.Equals(cmp.PeriodeId) &&
                    this.IsPeriode.Equals(cmp.IsPeriode);
 
         }

@@ -14,14 +14,13 @@ namespace UnitTest
     [TestClass]
     public class FindAndSaveCashFlowTest
     {
-       
-        CashFlowDto _cashflowSnapshot;
-        string _periodeId;
-
+        string _periodeId = "20151101";
+        InMemoryRepository _repo = new InMemoryRepository();
+        MockRepository _factory = new MockRepository(MockBehavior.Loose);
+        CashFlowDto _cashflowSnapshot = null;
          [TestInitialize]
         public void init()
-        {          
-            _periodeId = "20151101";
+        {           
             _cashflowSnapshot = new CashFlowDto()
             {
                 TenantId = "ABC",
@@ -31,27 +30,27 @@ namespace UnitTest
                 TotalPenjualan = 0.0,
                 TotalPenjualanLain = 0.0,
                 TotalPengeluaran = 150000.0,
-            };            
+            };
+           
+            var cashFlowCreate = _factory.Create<ICashFlow>();
+            cashFlowCreate.Setup(x => x.Snap()).Returns(_cashflowSnapshot);
+            cashFlowCreate.Setup(x => x.GenerateId()).Returns(new CashFlowId(_periodeId));
+           
+            _repo.Save(cashFlowCreate.Object);
         }
 
         [TestMethod]
-        public void testCaseIdSudahAdaDiDB()
+         public void testFindAndSaveCashFlowByPeriod()
         {
-            var factory = new MockRepository(MockBehavior.Loose);
-            var cashFlowCreate = factory.Create<ICashFlow>();
-            cashFlowCreate.Setup(x => x.Snap()).Returns(_cashflowSnapshot);
-            cashFlowCreate.Setup(x => x.GenerateId()).Returns(new CashFlowId(_periodeId));
-            var repo = new InMemoryRepository();
-            repo.Save(cashFlowCreate.Object);
-            var cashFlow = repo.FindCashFlowByPeriod(_periodeId);
+            
+            var cashFlow = _repo.FindCashFlowByPeriod(_periodeId);
             Assert.AreEqual(_cashflowSnapshot, cashFlow.Snap());
         }
 
         [TestMethod]
-        public void testFindAndSaveCashFlowByPeriod()
-        {                   
-            
-            _cashflowSnapshot = new CashFlowDto()
+        public void testCaseIdSudahAdaDiDBdanSimpanTerakhir()
+        {             
+            var cashflowSnapshot2 = new CashFlowDto()
             {
                 TenantId = "ABC",
                 PeriodId = "2015101",
@@ -61,14 +60,15 @@ namespace UnitTest
                 TotalPenjualanLain = 0.0,
                 TotalPengeluaran = 50000.0,
             };
-            var factory = new MockRepository(MockBehavior.Loose);
-            var cashFlowCreate = factory.Create<ICashFlow>();
-            cashFlowCreate.Setup(x => x.Snap()).Returns(_cashflowSnapshot);
-            cashFlowCreate.Setup(x => x.GenerateId()).Returns(new CashFlowId(_periodeId));
-            var repo = new InMemoryRepository();
-            repo.Save(cashFlowCreate.Object);
-            var cashFlow = repo.FindCashFlowByPeriod(_periodeId);
-            Assert.AreEqual(cashFlow.Snap().SaldoAkhir, 950000.0);
+           
+            var cashFlowCreate2 = _factory.Create<ICashFlow>();
+            cashFlowCreate2.Setup(x => x.Snap()).Returns(cashflowSnapshot2);
+            cashFlowCreate2.Setup(x => x.GenerateId()).Returns(new CashFlowId(_periodeId));
+           
+            _repo.Save(cashFlowCreate2.Object);
+            var cashFlow = _repo.FindCashFlowByPeriod(_periodeId);
+            //Assert.AreEqual(cashFlow.Snap().SaldoAkhir, 950000.0);
+            Assert.AreEqual(cashflowSnapshot2, cashFlow.Snap());
         }       
     }
 }
