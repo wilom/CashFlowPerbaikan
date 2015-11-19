@@ -11,7 +11,21 @@ namespace UnitTest
 {
     [TestClass]
     public class FindPeriodForDateTest
-    {
+    {       
+        [TestMethod]
+        public void testBuatPeriode()
+        {
+            DateTime tanggalPeriode = new DateTime(2015, 10, 1);
+            PeriodeId periodeId = new PeriodeId("2015101");
+            var periode =  new Periode(periodeId, StatusPeriode.Bebas);
+
+            var periodeSnapShot = new PeriodeDto()
+            {
+                PeriodeId = "2015101",
+                IsPeriode = StatusPeriode.Bebas
+            };
+            Assert.AreEqual(periodeSnapShot, periode.Snap());
+        }
         [TestMethod]
         public void testSaveAndFindPeriode()
         {
