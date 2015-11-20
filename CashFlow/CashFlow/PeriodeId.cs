@@ -9,9 +9,9 @@ namespace dokuku
     public class PeriodeId
     {
         private string _periodeId;
-        public PeriodeId(string periodeid)
+        public PeriodeId(string periodeId)
         {
-            this._periodeId = periodeid;
+            this._periodeId = periodeId;
         }
         public override string ToString()
         {
