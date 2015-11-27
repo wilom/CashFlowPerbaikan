@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using dokuku;
+using dokuku.interfaces;
 
 namespace dokuku.CashFlowHead
 {
-    public class CashFlow
+    public class CashFlow : ICashFlow
     {        
         private string _tenanId;
         private PeriodeId _periodId;
@@ -35,7 +36,7 @@ namespace dokuku.CashFlowHead
         {        
            
            this._tenanId=snapshot.TenantId;
-           this._periodId= new PeriodeId (snapshot.PeriodId) ;
+           this._periodId = new PeriodeId(snapshot.PeriodId.StartPeriode, snapshot.PeriodId.EndPeriode);
            this._saldoAwal = snapshot.SaldoAwal;
            this._saldoAkhir = snapshot.SaldoAkhir;
            this._totalPenjualan = snapshot.TotalPenjualan;
@@ -66,7 +67,7 @@ namespace dokuku.CashFlowHead
             return new Dto.CashFlowDto()
             {
                 TenantId = this._tenanId,
-                PeriodId = this._periodId.ToString(),
+                PeriodId = this._periodId.Snap(),
                 SaldoAwal = this._saldoAwal,
                 SaldoAkhir = this._saldoAkhir,
                 TotalPenjualan = this._totalPenjualan,
@@ -230,6 +231,13 @@ namespace dokuku.CashFlowHead
                     return this._nominal;
                 }
             }
+            public int Jumalah
+            {
+                get
+                {
+                    return this._jumlah;
+                }
+            }
             public void ChangeNominal(double nominal) 
             {
                 this._nominal = nominal;
@@ -270,6 +278,11 @@ namespace dokuku.CashFlowHead
             this._totalPengeluaran = CalculatePengeluaran();
 
             this._saldoAkhir = this._saldoAwal + this._totalPenjualan + this._totalPenjualanLain - this._totalPengeluaran;
+        }
+        
+        public CashFlowId GenerateId()
+        {
+            throw new NotImplementedException();
         }
     }    
 }

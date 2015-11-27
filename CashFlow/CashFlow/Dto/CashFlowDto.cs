@@ -9,7 +9,7 @@ namespace dokuku.Dto
     public class CashFlowDto
     {
         public string TenantId { get; set; }
-        public string PeriodId { get; set; }
+        public PeriodeDto PeriodId { get; set; }       
         public double SaldoAwal { get; set; }
         public double SaldoAkhir { get; set; }
         public double TotalPenjualan { get; set; }

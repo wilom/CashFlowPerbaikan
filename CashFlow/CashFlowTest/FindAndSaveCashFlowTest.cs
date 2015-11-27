@@ -24,7 +24,7 @@ namespace UnitTest
             _cashflowSnapshot = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = new PeriodeDto(),
                 SaldoAwal = 1000000.0,
                 SaldoAkhir = 850000.0,
                 TotalPenjualan = 0.0,
@@ -53,7 +53,7 @@ namespace UnitTest
             var cashflowSnapshot2 = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = new PeriodeDto(),
                 SaldoAwal = 1000000.0,
                 SaldoAkhir = 950000.0,
                 TotalPenjualan = 0.0,

@@ -14,5 +14,6 @@ namespace dokuku.interfaces
         PeriodeDto Snap();
 
         PeriodeId GenerateId();
+        
     }
 }

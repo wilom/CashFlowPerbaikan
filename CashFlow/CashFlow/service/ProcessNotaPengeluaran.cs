@@ -30,7 +30,7 @@ namespace dokuku
                 var listSummary = this.Repository.ListSummaryAkunIn(period,listAkun);
                 foreach (var sumakun in listSummary)
                 {
-                    cashFlow.ChangePengeluaran(sumakun.Akun, sumakun.Nominal);
+                    cashFlow.ChangePengeluaran(sumakun.Akun, sumakun.Nominal,sumakun.Jumlah);
                 }
                 this.Repository.Save(cashFlow);
             }

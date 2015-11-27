@@ -10,7 +10,7 @@ namespace dokuku.interfaces
 {
     public interface ICashFlow
     {
-        void ChangePengeluaran(string akun, double nominal);
+        void ChangePengeluaran(string akun, double nominal, int jumlah);
 
         CashFlowDto Snap();
 

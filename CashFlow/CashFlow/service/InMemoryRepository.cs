@@ -11,11 +11,12 @@ namespace dokuku.service
     public class InMemoryRepository : IRepository
     {
         private Dictionary<CashFlowId, ICashFlow> _cashFlowDb = new Dictionary<CashFlowId, ICashFlow>();
-        private Dictionary<PeriodeId, IPeriod> _periodeDb = new Dictionary<PeriodeId, IPeriod>();
+        private Dictionary<PeriodeId, IPeriod> _periodeDb = new Dictionary<PeriodeId, IPeriod>();      
         public IPeriod FindPeriodForDate(DateTime date)
         {
-            var key = new PeriodeId(date.ToString());
-            return this._periodeDb[key];  
+            var key = this._periodeDb.Keys.Where(x => x.IsInPeriod(date)).FirstOrDefault();
+            if (key == null) return null;
+            return this._periodeDb[key];
         }
 
         public ICashFlow FindCashFlowByPeriod(string periodId)
@@ -35,12 +36,12 @@ namespace dokuku.service
             this._cashFlowDb[cashFlow.GenerateId()] = cashFlow; 
         }
 
-
         public void SavePeriod(IPeriod period)
         {
             if (!this._periodeDb.ContainsKey(period.GenerateId()))
                 this._periodeDb.Add(period.GenerateId(), period);
             this._periodeDb[period.GenerateId()] = period; 
         }
+       
     }
 }

@@ -33,7 +33,7 @@ namespace UnitTest
             mockPengeluaran.SetupGet(t => t.Date).Returns(transactionDate);
             mockPengeluaran.Setup(t => t.ListAkun()).Returns(listAkun);
             mockRepository.Setup(t => t.ListSummaryAkunIn(mockCurrentPeriod.Object, listAkun)).Returns(listSummaryAkun);
-            mockCashFlow.Setup(t => t.ChangePengeluaran(It.IsAny<string>(), It.IsAny<double>()));
+            mockCashFlow.Setup(t => t.ChangePengeluaran(It.IsAny<string>(), It.IsAny<double>(),It.IsAny<int>()));
             mockRepository.Setup(t => t.Save(mockCashFlow.Object));
 
             var service = new ProcessNotaPengeluaran();

@@ -15,15 +15,16 @@ namespace UnitTest
     {
         CashFlow _cashFlow = null;
         Periode _periode = null;
+        PeriodeId _periodeId = null;
         
        
         [TestInitialize]
         public void init() 
         {
-            PeriodeId periodeId = new PeriodeId("2015101");
+            _periodeId = new PeriodeId(new DateTime(2015, 11, 1), new DateTime(2015, 11, 6));
             
-            _cashFlow = new CashFlow("ABC", periodeId, 500000.0);
-            _periode = new Periode(periodeId,StatusPeriode.Mingguan);
+            _cashFlow = new CashFlow("ABC", _periodeId, 500000.0);
+            _periode = new Periode(_periodeId,StatusPeriode.Mingguan);
         }
         
         [TestMethod]
@@ -33,7 +34,7 @@ namespace UnitTest
             var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 500000.0,
                 SaldoAkhir = 500000.0,
                 TotalPenjualan = 0.0,
@@ -49,8 +50,8 @@ namespace UnitTest
             var periodeSnapShot = _periode.Snap();
             var expected = new PeriodeDto()
             {
-                PeriodeId = "2015101",
-                IsPeriode = StatusPeriode.Mingguan
+                StartPeriode = new DateTime(2015, 11, 1),
+                EndPeriode = new DateTime(2015, 11, 6)
             };
             Assert.AreEqual(expected, periodeSnapShot);
         }
@@ -65,7 +66,7 @@ namespace UnitTest
             var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 500000.0,
                 SaldoAkhir = 700000.0,
                 TotalPenjualan = 200000.0,
@@ -84,7 +85,7 @@ namespace UnitTest
             var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 500000.0,
                 SaldoAkhir = 1000000.0,
                 TotalPenjualan = 500000.0,
@@ -115,7 +116,7 @@ namespace UnitTest
             var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 500000.0,
                 SaldoAkhir = 900000.0,
                 TotalPenjualan = 200000.0,
@@ -132,7 +133,7 @@ namespace UnitTest
             var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 500000.0,
                 SaldoAkhir = 1000000.0,
                 TotalPenjualan = 0.0,
@@ -164,7 +165,7 @@ namespace UnitTest
             var expectedPengeluaran = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 500000.0,
                 SaldoAkhir = 1200000.0,
                 TotalPenjualan = 1200000.0,
@@ -183,7 +184,7 @@ namespace UnitTest
             var expectedPengeluaran = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 500000.0,
                 SaldoAkhir = -100000.0,
                 TotalPenjualan = 0.0,
@@ -196,7 +197,7 @@ namespace UnitTest
         [TestMethod]
         public void testSecenario()
         {
-            PeriodeId periodid = new PeriodeId("2015101");
+            PeriodeId periodid = _periodeId;
             _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
             _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 1500000.0);
             _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 2000000.0);
@@ -208,7 +209,7 @@ namespace UnitTest
             var expectedPengeluaran = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 1000000.0,
                 SaldoAkhir = 5600000.0,
                 TotalPenjualan = 3500000.0,
@@ -222,7 +223,7 @@ namespace UnitTest
         [TestMethod]
         public void testMenginstanceDariSnapshot()
         {
-            PeriodeId periodid = new PeriodeId("2015101");
+            PeriodeId periodid = _periodeId;
             _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
             _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 1500000.0);
             _cashFlow.AddPenjualan(new DateTime(2015, 10, 2), 2000000.0);
@@ -263,15 +264,15 @@ namespace UnitTest
        
         [TestMethod]
         public void testCashFlowItemsPenjualan()
-        {              
-            PeriodeId periodid = new PeriodeId("2015101");
+        {
+            PeriodeId periodid = _periodeId;
             _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
             _cashFlow.AddPenjualan(new DateTime(2015, 10, 1), 1500000.0);         
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 1000000.0,
                 SaldoAkhir = 2500000.0,
                 TotalPenjualan = 1500000.0,
@@ -288,14 +289,14 @@ namespace UnitTest
         [TestMethod]
         public void testCashFlowItemsPenjualanLain()
         {
-            PeriodeId periodid = new PeriodeId("2015101");
+            PeriodeId periodid = _periodeId;
             _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
             _cashFlow.AddPenjualanLain(new DateTime(2015, 10, 1), 1500000.0);
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 1000000.0,
                 SaldoAkhir = 2500000.0,
                 TotalPenjualan = 0.0,
@@ -312,14 +313,14 @@ namespace UnitTest
         [TestMethod]
         public void testCashFlowItemsPengeluaran()
         {
-            PeriodeId periodid = new PeriodeId("2015101");
+            PeriodeId periodid = _periodeId;
             _cashFlow = new CashFlow("ABC", periodid, 1000000.0);
             _cashFlow.ChangePengeluaran("Ayam",150000.0,7);
             var cashFlowSnapshot = _cashFlow.Snap();
             var expected = new CashFlowDto()
             {
                 TenantId = "ABC",
-                PeriodId = "2015101",
+                PeriodId = _periode.Snap(),
                 SaldoAwal = 1000000.0,
                 SaldoAkhir = 850000.0,
                 TotalPenjualan = 0.0,
