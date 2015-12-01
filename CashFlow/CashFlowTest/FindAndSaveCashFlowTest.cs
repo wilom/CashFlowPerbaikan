@@ -14,7 +14,7 @@ namespace UnitTest
     [TestClass]
     public class FindAndSaveCashFlowTest
     {
-        string _periodeId = "20151101";
+        PeriodeId _periodeId = new PeriodeId(new DateTime(2015, 11, 1), new DateTime(2015, 11, 6));
         InMemoryRepository _repo = new InMemoryRepository();
         MockRepository _factory = new MockRepository(MockBehavior.Loose);
         CashFlowDto _cashflowSnapshot = null;

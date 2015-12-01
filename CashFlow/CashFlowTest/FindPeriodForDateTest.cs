@@ -50,7 +50,7 @@ namespace UnitTest
             var periodeCrearte = factory.Create<IPeriod>();
 
             periodeCrearte.Setup(x => x.Snap()).Returns(periodeSnapShot);
-            periodeCrearte.Setup(x => x.GenerateId()).Returns(new PeriodeId(new DateTime(2015, 10, 1), new DateTime(2015, 10, 6)));
+            periodeCrearte.Setup(x => x.PeriodId).Returns(new PeriodeId(new DateTime(2015, 10, 1), new DateTime(2015, 10, 6)));
 
             repo.SavePeriod(periodeCrearte.Object);
             var periode = repo.FindPeriodForDate(new DateTime(2015, 10, 3));

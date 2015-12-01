@@ -8,8 +8,8 @@ namespace dokuku
 {
     public class CashFlowId
     {
-        private string _periodId = "";
-        public CashFlowId(string periodId)
+        private PeriodeId _periodId = null;
+        public CashFlowId(PeriodeId periodId)
         {
             this._periodId = periodId;
         }

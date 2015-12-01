@@ -16,7 +16,7 @@ namespace UnitTest
         public void testProsesNotaPengeluaran()
         {
             var transactionDate = new DateTime(2015, 10, 26);
-            var periodId = "20151104";
+            var periodId = new PeriodeId(new DateTime(2015, 11, 1), new DateTime(2015, 11, 6));
             var listAkun = new string[] { "Ayam" };
             var listSummaryAkun = new List<SummaryAkunDto>() 
             {
@@ -47,7 +47,7 @@ namespace UnitTest
         public void testCashFlowTidakDitemukanDiReposytory()
         {
             var transactionDate = new DateTime(2015, 10, 26);
-            var periodId = "20151104";
+            var periodId = new PeriodeId(new DateTime(2015, 11, 1), new DateTime(2015, 11, 6));
 
             var factory = new MockRepository(MockBehavior.Loose);
             var mockRepository = factory.Create<IRepository>();
@@ -68,7 +68,7 @@ namespace UnitTest
         public void testPeriodeTidakDitemukanDiRepository()
         {
             var transactionDate = new DateTime(2015, 10, 26);
-            var periodId = "20151104";
+            var periodId = new PeriodeId(new DateTime(2015, 11, 1), new DateTime(2015, 11, 6));
 
             var factory = new MockRepository(MockBehavior.Loose);
             var mockRepository = factory.Create<IRepository>();

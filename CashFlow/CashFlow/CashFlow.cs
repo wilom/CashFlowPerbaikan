@@ -279,10 +279,11 @@ namespace dokuku.CashFlowHead
 
             this._saldoAkhir = this._saldoAwal + this._totalPenjualan + this._totalPenjualanLain - this._totalPengeluaran;
         }
-        
+
+
         public CashFlowId GenerateId()
         {
-            throw new NotImplementedException();
+            return new CashFlowId(this._periodId);
         }
     }    
 }

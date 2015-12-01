@@ -9,11 +9,9 @@ namespace dokuku.interfaces
 {
     public interface IPeriod
     {
-        string PeriodId{ get; }
+        PeriodeId PeriodId{ get; }
 
-        PeriodeDto Snap();
-
-        PeriodeId GenerateId();
+        PeriodeDto Snap();        
         
     }
 }

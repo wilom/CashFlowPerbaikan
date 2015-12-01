@@ -10,11 +10,13 @@ namespace dokuku.interfaces
     {
         IPeriod FindPeriodForDate(DateTime date);
 
-        ICashFlow FindCashFlowByPeriod(string periodId);
+        ICashFlow FindCashFlowByPeriod(PeriodeId periodId);
 
         IList<Dto.SummaryAkunDto> ListSummaryAkunIn(IPeriod period, string[] listAkun);
   
         void Save(ICashFlow cashFlow);
-        
+
+
+       
     }
 }

@@ -22,38 +22,12 @@ namespace dokuku
         {           
                 return this._periodid.Snap();                        
             
-        }      
+        } 
 
-        //public int CalculateRentangAll()
-        //{
-            
-        //    DateTime intStart = rentang.StartPeriode;
-        //    DateTime intEnd = rentang.StartPeriode;
-        //    return this._totalRentang = Convert.ToInt32(intStart)+Convert.ToInt32(intEnd);
-        //}
-
-        //public IEnumerable<DateTime> Range()
-        //{
-        //    return Enumerable.Range(0, (_endPeriode - _startPeriode).Days + 1).Select(d => _startPeriode.AddDays(d));
-        //}
-
-        //public object StartPeriode(DateTime startPeriode)
-        //{
-        //    return this._startPeriode = startPeriode;
-        //}
-        //public object EndPeriode(DateTime endPeriode)
-        //{
-        //    return this._endPeriode = endPeriode;
-        //}
-        
-        public string PeriodId
+        public PeriodeId PeriodId
         {
-            get { throw new NotImplementedException(); }
+            get { return this._periodid; }
         }
-
-        public PeriodeId GenerateId()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }

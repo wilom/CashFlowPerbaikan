@@ -19,7 +19,7 @@ namespace UnitTest
             var repo = new InMemoryRepository();           
             var periodeId1 = new PeriodeId(new DateTime(2015, 11, 1), new DateTime(2015, 11, 6));
             var periode = new Periode(periodeId1, StatusPeriode.Mingguan);
-         
+            repo.SavePeriod(periode);
             var periodeSnapShot = new PeriodeDto()
             {
                 StartPeriode = new DateTime(2015, 11, 1),
@@ -27,25 +27,26 @@ namespace UnitTest
             };          
            
             var periodeSave = repo.FindPeriodForDate(new DateTime(2015, 10, 3));
-            repo.SavePeriod(periode);
+            
             Assert.AreEqual(periodeSnapShot, periodeSave.Snap());
 
             //cashflow           
             var cashFlow = new CashFlow("ABC", periodeId1, 500000.0);
-            var cashFlowSnapshot = cashFlow.Snap();
-            var cashflowSnapshotDto = new CashFlowDto()
-           {
-               TenantId = "ABC",
-               PeriodId = periode.Snap(),
-               SaldoAwal = 500000.0,
-               SaldoAkhir = 0.0,
-               TotalPenjualan = 0.0,
-               TotalPenjualanLain = 0.0,
-               TotalPengeluaran = 0.0,
-           };
-            
             repo.Save(cashFlow);
-            var findCashFlow = repo.FindCashFlowByPeriod(periodeId1.ToString());            
+
+            var cashflowSnapshotDto = new CashFlowDto()
+            {
+                TenantId = "ABC",
+                PeriodId = periode.Snap(),
+                SaldoAwal = 500000.0,
+                SaldoAkhir = 500000.0,
+                TotalPenjualan = 0.0,
+                TotalPenjualanLain = 0.0,
+                TotalPengeluaran = 0.0,
+            };
+
+
+            var findCashFlow = repo.FindCashFlowByPeriod(periodeId1);
             Assert.AreEqual(cashflowSnapshotDto, findCashFlow.Snap());
 
            // //Penjualan

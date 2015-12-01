@@ -19,7 +19,7 @@ namespace dokuku.service
             return this._periodeDb[key];
         }
 
-        public ICashFlow FindCashFlowByPeriod(string periodId)
+        public ICashFlow FindCashFlowByPeriod(PeriodeId periodId)
         {            
                 var key = new CashFlowId(periodId);
                 return this._cashFlowDb[key];          
@@ -38,10 +38,10 @@ namespace dokuku.service
 
         public void SavePeriod(IPeriod period)
         {
-            if (!this._periodeDb.ContainsKey(period.GenerateId()))
-                this._periodeDb.Add(period.GenerateId(), period);
-            this._periodeDb[period.GenerateId()] = period; 
-        }
+            if (!this._periodeDb.ContainsKey(period.PeriodId))
+                this._periodeDb.Add(period.PeriodId, period);
+            this._periodeDb[period.PeriodId] = period;         
+        }      
        
     }
 }
