@@ -19,6 +19,8 @@ namespace dokuku.Dto
         public List<ItemsPenjualanLainDto> ItemsPenjualanLain { get; set; }
         public List<ItemsPengeluaranDto> ItemsPengeluaran { get; set; }
 
+        //public List<dokuku.CashFlowHead.CashFlow.Penjualan> ListPenjualan  { get; set; }
+
         public override bool Equals(object obj)
         {
             if (!(obj is CashFlowDto)) return false;

@@ -45,9 +45,10 @@ namespace dokuku.CashFlowHead
            this._itemsPenjualan = ConvertToItemsPenjualan(snapshot.ItemsPenjualan);
            this._itemsPenjualanLain = ConvertToItemsPenjualanLain(snapshot.ItemsPenjualanLain);
            this._itemsPengeluaran = ConvertToItemsPengeluaran(snapshot.ItemsPengeluaran);
+            
         }
         //konvert method
-
+        
         public List<Penjualan> ConvertToItemsPenjualan(List<CashFlowDto.ItemsPenjualanDto> itemsPenjualanDto)
         {
             return itemsPenjualanDto.Select(x => new Penjualan(x.DateTime, x.Nominal)).ToList();

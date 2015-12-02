@@ -11,7 +11,7 @@ namespace dokuku.service
     public class InMemoryRepository : IRepository
     {
         private Dictionary<CashFlowId, ICashFlow> _cashFlowDb = new Dictionary<CashFlowId, ICashFlow>();
-        private Dictionary<PeriodeId, IPeriod> _periodeDb = new Dictionary<PeriodeId, IPeriod>();      
+        private Dictionary<PeriodeId, IPeriod> _periodeDb = new Dictionary<PeriodeId, IPeriod>();       
         public IPeriod FindPeriodForDate(DateTime date)
         {
             var key = this._periodeDb.Keys.Where(x => x.IsInPeriod(date)).FirstOrDefault();
@@ -41,7 +41,9 @@ namespace dokuku.service
             if (!this._periodeDb.ContainsKey(period.PeriodId))
                 this._periodeDb.Add(period.PeriodId, period);
             this._periodeDb[period.PeriodId] = period;         
-        }      
+        }
+
+
        
     }
 }
