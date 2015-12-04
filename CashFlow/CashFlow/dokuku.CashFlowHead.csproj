@@ -58,6 +58,7 @@
     <Compile Include="Periode.cs" />
     <Compile Include="PeriodeId.cs" />
     <Compile Include="service\InMemoryRepository.cs" />
+    <Compile Include="NotaPengeluaranId.cs" />
     <Compile Include="service\ProcessNotaPengeluaran.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

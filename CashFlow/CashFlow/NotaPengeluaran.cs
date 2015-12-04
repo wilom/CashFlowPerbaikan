@@ -1,5 +1,6 @@
 ﻿using dokuku.Dto;
 using dokuku.exceptions;
+using dokuku.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace dokuku
 {
-    public class NotaPengeluaran
+    public class NotaPengeluaran : INotaPengeluaran
     {
         private DateTime _dateTime;
-        private string _noNota;       
+        private NotaPengeluaranId _noNota;       
         private double _totalNota;
         List<AkunPengeluaran> _itemsAkun = new List<AkunPengeluaran>();
 
-        public NotaPengeluaran(DateTime dateTime, string noNota)
+        public NotaPengeluaran(DateTime dateTime, NotaPengeluaranId noNota)
         {      
             this._dateTime = dateTime;
             this._noNota = noNota;
@@ -130,7 +131,11 @@ namespace dokuku
         private double CalculateNominalPengeluaran()
         {
             return this._itemsAkun.Sum(x => x.Nominal);
-        }      
+        }     
 
+        public NotaPengeluaranId NoNota
+        {
+            get {return this._noNota; }
+        }
     }
 }

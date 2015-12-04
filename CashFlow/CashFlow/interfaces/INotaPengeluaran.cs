@@ -1,4 +1,6 @@
-﻿using System;
+﻿using dokuku.Dto;
+using dokuku.service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +15,8 @@ namespace dokuku.interfaces
 
         string[] ListAkun();
 
+        NotaPengeluaranDto Snap();
+
+        NotaPengeluaranId NoNota { get; }
     }
 }

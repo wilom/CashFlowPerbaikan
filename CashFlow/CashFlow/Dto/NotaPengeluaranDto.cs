@@ -10,7 +10,7 @@ namespace dokuku.Dto
     {
         public DateTime Tanggal { get; set; }
 
-        public string NoNota { get; set; }
+        public NotaPengeluaranId NoNota { get; set; }
 
         public double TotalNota { get; set; }
 

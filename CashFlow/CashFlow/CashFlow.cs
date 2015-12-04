@@ -122,7 +122,7 @@ namespace dokuku.CashFlowHead
                 {
                     return this._dateTime;
                 }
-            }            
+            }          
         }
 
         public void AddPenjualan(DateTime date, double nominal)
@@ -177,6 +177,7 @@ namespace dokuku.CashFlowHead
                     return this._dateTimeLain;
                 }
             }
+            
         }
 
         public void AddPenjualanLain(DateTime dateLain, double nominalLain)
