@@ -12,15 +12,24 @@ namespace dokuku
     public class NotaPengeluaran : INotaPengeluaran
     {
         private DateTime _dateTime;
-        private NotaPengeluaranId _noNota;       
+        private string _noNota;       
         private double _totalNota;
         List<AkunPengeluaran> _itemsAkun = new List<AkunPengeluaran>();
+        private DateTime dateTime;
+        private NotaPengeluaranId noNota;
 
-        public NotaPengeluaran(DateTime dateTime, NotaPengeluaranId noNota)
+        public NotaPengeluaran(DateTime dateTime, string noNota)
         {      
             this._dateTime = dateTime;
             this._noNota = noNota;
             CalculateNotaPengeluaran();
+        }
+
+        public NotaPengeluaran(DateTime dateTime, NotaPengeluaranId noNota)
+        {
+            // TODO: Complete member initialization
+            this.dateTime = dateTime;
+            this.noNota = noNota;
         }
 
         public Dto.NotaPengeluaranDto Snap()
@@ -131,11 +140,23 @@ namespace dokuku
         private double CalculateNominalPengeluaran()
         {
             return this._itemsAkun.Sum(x => x.Nominal);
-        }     
+        }
+
+
+        //InotaIntance
+        public DateTime Date
+        {
+            get { return this._dateTime; }
+        }
+
+        public string[] ListAkun()
+        {
+            throw new NotImplementedException();
+        }
 
         public NotaPengeluaranId NoNota
         {
-            get {return this._noNota; }
+            get { return this.noNota; }
         }
     }
 }

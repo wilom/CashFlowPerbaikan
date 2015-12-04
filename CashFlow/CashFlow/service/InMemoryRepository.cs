@@ -44,17 +44,19 @@ namespace dokuku.service
             this._periodeDb[period.PeriodId] = period;         
         }
 
-        public INotaPengeluaran FindNotaPengeluaranByID(string noNota)
-        {
-            var key = new NotaPengeluaranId(noNota);
-            if (key == null) return null;
-            return this._notaDb[key];   
-        }
+      
         public void SaveNota(INotaPengeluaran notaPengeluaran)
         {
             if (!this._notaDb.ContainsKey(notaPengeluaran.NoNota))
                 this._notaDb.Add(notaPengeluaran.NoNota, notaPengeluaran);
-            this._notaDb[notaPengeluaran.NoNota] = notaPengeluaran;      
-        }       
+            this._notaDb[notaPengeluaran.NoNota] = notaPengeluaran;   
+        }
+                
+        public INotaPengeluaran FindNotaPengeluaranByID(string noNota)
+        {
+            var key = new NotaPengeluaranId(noNota);
+            if (key == null) return null;
+            return this._notaDb[key];  
+        }
     }
 }

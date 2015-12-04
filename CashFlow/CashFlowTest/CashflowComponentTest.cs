@@ -119,18 +119,18 @@ namespace UnitTest
 
             //NotaPengeluaran
             
-            var noNota = new NotaPengeluaranId("123");
-            var notaPengeluaran = new NotaPengeluaran(new DateTime(2015, 11, 1), noNota);
-            repo.SaveNota(notaPengeluaran);
-            var repoFindNota = repo.FindNotaPengeluaranByID("123");
-            //var notaSnapshot = notaPengeluaran.Snap();
-            var notaSnap = new NotaPengeluaranDto()
-            {
-                Tanggal = new DateTime(2015, 11, 1),
-                NoNota = noNota,
-                TotalNota = 0.0
-            };
-            Assert.AreEqual(notaSnap, repoFindNota.Snap());
+            //var noNota = new NotaPengeluaranId("123");
+            //var notaPengeluaran = new NotaPengeluaran(new DateTime(2015, 11, 1), noNota);
+            //repo.SaveNota(notaPengeluaran);
+            //var foundNota = repo.FindNotaPengeluaranByID("123");
+            ////var notaSnapshot = notaPengeluaran.Snap();
+            //var notaSnap = new NotaPengeluaranDto()
+            //{
+            //    Tanggal = new DateTime(2015, 11, 1),
+            //    NoNota = noNota,
+            //    TotalNota = 0.0
+            //};
+            //Assert.AreEqual(notaSnap, foundNota.Snap());
 
             ////AddAkunNota
             //notaPengeluaran.AddAkun("Ayam", 200000, 5);

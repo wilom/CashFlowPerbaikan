@@ -63,6 +63,7 @@
     <Compile Include="FindPeriodForDateTest.cs" />
     <Compile Include="PeriodIdTest.cs" />
     <Compile Include="CashflowComponentTest.cs" />
+    <Compile Include="FindAndSaveNotaTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CashFlow\dokuku.CashFlowHead.csproj">

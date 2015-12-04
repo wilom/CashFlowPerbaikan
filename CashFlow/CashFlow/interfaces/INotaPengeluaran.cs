@@ -15,7 +15,6 @@ namespace dokuku.interfaces
 
         string[] ListAkun();
 
-        NotaPengeluaranDto Snap();
 
         NotaPengeluaranId NoNota { get; }
     }
