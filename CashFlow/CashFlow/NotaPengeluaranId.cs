@@ -8,29 +8,28 @@ namespace dokuku
     public class NotaPengeluaranId
     {
         private string _noNota;
+        //private NotaPengeluaranId _noNota = null;
 
         public NotaPengeluaranId(string noNota)
         {
-            // TODO: Complete member initialization
             this._noNota = noNota;
-        }       
-        //private string _noNota;       
+        }
 
-        //public NotaPengeluaranId(string noNota)
-        //{          
-        //    this._noNota = noNota;
-        //}
-        //public override bool Equals(object obj)
+        //public NotaPengeluaranId(NotaPengeluaranId noNota)
         //{
-        //    if (!(obj is NotaPengeluaranId)) return false;
-        //    var cmp = (NotaPengeluaranId)obj;
-        //    return this._noNota.Equals(cmp._noNota);
-        //}
-
-
-        public string Snap()
+        //    // TODO: Complete member initialization
+        //    this._noNota = noNota;
+        //}       
+        public override bool Equals(object obj)
         {
-            return this._noNota;
+            if (!(obj is NotaPengeluaranId)) return false;
+            var cmp = (NotaPengeluaranId)obj;
+            return this._noNota.Equals(cmp._noNota);
+        }
+        
+        public override int GetHashCode()
+        {
+            return this._noNota.GetHashCode();
         }
     }
 }

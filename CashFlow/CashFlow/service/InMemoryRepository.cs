@@ -25,6 +25,12 @@ namespace dokuku.service
                 var key = new CashFlowId(periodId);
                 return this._cashFlowDb[key];          
         }
+
+        public INotaPengeluaran FindNotaPengeluaranByID(string noNota)
+        {
+            var key = new NotaPengeluaranId(noNota);
+            return this._notaDb[key];
+        }
         public IList<Dto.SummaryAkunDto> ListSummaryAkunIn(IPeriod period, string[] listAkun)
         {
             throw new NotImplementedException();
@@ -41,22 +47,16 @@ namespace dokuku.service
         {
             if (!this._periodeDb.ContainsKey(period.PeriodId))
                 this._periodeDb.Add(period.PeriodId, period);
-            this._periodeDb[period.PeriodId] = period;         
+            this._periodeDb[period.PeriodId] = period;
         }
 
-      
-        public void SaveNota(INotaPengeluaran notaPengeluaran)
+        public void SaveNota(INotaPengeluaran notaPengleuaran)
         {
-            if (!this._notaDb.ContainsKey(notaPengeluaran.NoNota))
-                this._notaDb.Add(notaPengeluaran.NoNota, notaPengeluaran);
-            this._notaDb[notaPengeluaran.NoNota] = notaPengeluaran;   
+            if (!this._notaDb.ContainsKey(notaPengleuaran.NoNota()))
+                this._notaDb.Add(notaPengleuaran.NoNota(), notaPengleuaran);
+            this._notaDb[notaPengleuaran.NoNota()] = notaPengleuaran;
         }
                 
-        public INotaPengeluaran FindNotaPengeluaranByID(string noNota)
-        {
-            var key = new NotaPengeluaranId(noNota);
-            if (key == null) return null;
-            return this._notaDb[key];  
-        }
+       
     }
 }

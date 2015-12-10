@@ -9,14 +9,12 @@ using System.Threading.Tasks;
 
 namespace dokuku
 {
-    public class NotaPengeluaran : INotaPengeluaran
+    public class NotaPengeluaran
     {
         private DateTime _dateTime;
         private string _noNota;       
         private double _totalNota;
-        List<AkunPengeluaran> _itemsAkun = new List<AkunPengeluaran>();
-        private DateTime dateTime;
-        private NotaPengeluaranId noNota;
+        List<AkunPengeluaran> _itemsAkun = new List<AkunPengeluaran>();         
 
         public NotaPengeluaran(DateTime dateTime, string noNota)
         {      
@@ -25,13 +23,7 @@ namespace dokuku
             CalculateNotaPengeluaran();
         }
 
-        public NotaPengeluaran(DateTime dateTime, NotaPengeluaranId noNota)
-        {
-            // TODO: Complete member initialization
-            this.dateTime = dateTime;
-            this.noNota = noNota;
-        }
-
+       
         public Dto.NotaPengeluaranDto Snap()
         {
             return new Dto.NotaPengeluaranDto()
@@ -143,20 +135,6 @@ namespace dokuku
         }
 
 
-        //InotaIntance
-        public DateTime Date
-        {
-            get { return this._dateTime; }
-        }
-
-        public string[] ListAkun()
-        {
-            throw new NotImplementedException();
-        }
-
-        public NotaPengeluaranId NoNota
-        {
-            get { return this.noNota; }
-        }
+       
     }
 }
